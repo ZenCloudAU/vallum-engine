@@ -2,13 +2,17 @@
 
 ## Product definition
 
-Vallum Engine is a solo tabletop story engine for turning original worlds, characters, campaign notes, and future lore packs into playable browser sessions.
+Vallum Engine is a solo tabletop story engine for turning original worlds, characters, campaign notes, and lore packs into playable browser sessions.
+
+The first official world line is The Stormwright Cycle, using the uploaded series bible as the master canon source.
 
 The product is not a clone of any commercial tabletop or video game property. It is an original engine with its own module format, runtime, presentation model, and release path.
 
 ## Product thesis
 
 The engine should let a creator feed in a story world and then experience that world as a playable solo tabletop campaign: map, party, narration, choices, dice, consequences, character state, ambience, and saved progress.
+
+For Stormwright, the playable experience must prioritise moral pressure, restraint, violence, reputation, witness, and consequence over generic fantasy progression.
 
 ## Current release line
 
@@ -49,25 +53,38 @@ Delivered:
 - character sheet drawer
 - product documentation baseline
 
+### v0.2.1 — Stormwright canon alignment
+
+Purpose: make The Stormwright Cycle the formal master world guide for Vallum's first original content line.
+
+Delivered:
+
+- Stormwright canon guide
+- Stormwright-to-Vallum adaptation plan
+- first real module target selected: The Noise of Purpose
+- product roadmap aligned to Stormwright content
+
 ## Release roadmap
 
-### v0.3 — First real story module
+### v0.3 — Stormwright module one: The Noise of Purpose
 
-Goal: replace sample content with the first short playable arc from Phil's own writing.
+Goal: replace the sample content with the first playable Stormwright module.
+
+Source focus:
+
+Book I, Chapter 1: the ridge above the burning caravan, the choice between saving civilians and cutting the head, the surge, the raider captain, and the aftermath.
 
 Scope:
 
-- one starting location
-- one route or travel sequence
-- one primary threat
-- one choice-driven investigation or social scene
-- one encounter
-- one climax
-- one return or session-end state
-- named characters from the source world
-- module notes describing what was adapted from source material
+- single-character or light-party module centred on Kael Vorn
+- battlefield tableau map rather than generic road map
+- civilians as objective state
+- raider captain as tactical pressure point
+- Force, Restraint, Witness, Hollow, and Reputation as early Stormwright mechanics
+- outcome states that track what was saved, what was lost, and what Kael refused or accepted seeing
+- module notes describing the source-canon relationship
 
-Success condition: Phil can play a short session using his own world, characters, and tone.
+Success condition: Phil can play a short Stormwright session and feel that Kael's world has entered Vallum without becoming generic fantasy.
 
 ### v0.4 — Module authoring guide
 
@@ -82,24 +99,27 @@ Scope:
 - character definition pattern
 - ambience tagging pattern
 - save-state considerations
+- Stormwright adaptation checklist
 
-Success condition: a new story slice can be converted into a playable module without changing the engine.
+Success condition: a new Stormwright story slice can be converted into a playable module without changing the engine.
 
-### v0.5 — Rules and progression layer
+### v0.5 — Stormwright rules and progression layer
 
-Goal: make party state more durable and game-like.
+Goal: make character state reflect Stormwright's actual themes.
 
 Scope:
 
-- traits
+- Force
+- Restraint
+- Witness
+- Hollow
+- Reputation
 - wounds
-- inventory
-- status effects
-- simple rewards
-- rest and recovery rules
-- basic progression hooks
+- objective state
+- community consequence
+- rest and withdrawal rules
 
-Success condition: characters feel persistent across more than one session.
+Success condition: characters feel persistent across more than one session, and moral state matters as much as HP.
 
 ### v0.6 — Lore bible and content compiler
 
@@ -112,6 +132,7 @@ Scope:
 - module compiler prompt pattern
 - canon extraction template
 - generated module review checklist
+- Stormwright canon validation process
 
 Success condition: source writing can be digested into structured game material before runtime.
 
