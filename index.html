@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vallum Engine</title>
+  <meta name="description" content="Solo tabletop story engine for original campaign worlds." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Vallum Engine v0.1</p>
+        <h1>Solo Tabletop Story Engine</h1>
+      </div>
+      <div class="topbar-actions">
+        <button id="newGameBtn" class="ghost">New session</button>
+        <button id="saveBtn" class="ghost">Save</button>
+        <button id="ambienceBtn" class="primary">Start ambience</button>
+      </div>
+    </header>
+
+    <main class="game-layout">
+      <section class="table-panel" aria-label="Game table">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Map</p>
+            <h2 id="regionTitle">Loading campaign</h2>
+          </div>
+          <div id="timeBox" class="time-box">Day 1 · Dawn</div>
+        </div>
+
+        <div class="map-frame">
+          <svg id="worldMap" viewBox="0 0 1000 620" role="img" aria-label="Top-down campaign map">
+            <defs>
+              <radialGradient id="mapGlow" cx="50%" cy="50%" r="65%">
+                <stop offset="0%" stop-color="#354230" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#111615" stop-opacity="1" />
+              </radialGradient>
+              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.35" />
+              </filter>
+            </defs>
+            <rect x="0" y="0" width="1000" height="620" fill="url(#mapGlow)" />
+            <g id="routeLayer"></g>
+            <g id="locationLayer"></g>
+            <g id="tokenLayer"></g>
+          </svg>
+        </div>
+
+        <div class="table-footer">
+          <div id="sceneMood" class="mood-card">Mood: Loading</div>
+          <div id="diceLog" class="dice-log">Dice log ready.</div>
+        </div>
+      </section>
+
+      <section class="story-panel" aria-label="Game master narration">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Game Master</p>
+            <h2 id="sceneTitle">Loading</h2>
+          </div>
+          <div id="sceneType" class="scene-type">Scene</div>
+        </div>
+
+        <article id="narration" class="narration"></article>
+
+        <div id="choiceList" class="choices"></div>
+
+        <div class="lower-grid">
+          <section class="party-card">
+            <div class="section-title">Party</div>
+            <div id="partyList"></div>
+          </section>
+          <section class="journal-card">
+            <div class="section-title">Journal</div>
+            <div id="journalList"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
