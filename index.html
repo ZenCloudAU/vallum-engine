@@ -10,35 +10,54 @@
 </head>
 <body>
   <section id="campaignCover" class="campaign-cover" aria-label="Campaign launch screen">
-    <div class="cover-card">
-      <p class="eyebrow">Vallum Engine v0.3 · Stormwright Cycle</p>
+    <div class="cover-card prologue-card">
+      <p class="eyebrow">The Stormwright Cycle · Playable Module</p>
       <h1>The Noise of Purpose</h1>
-      <p class="cover-copy">A Stormwright solo module: Kael Vorn on the ridge above a burning caravan, forced to choose between saving civilians, breaking the raider captain, commanding through reputation, or witnessing the field before becoming part of it.</p>
+      <p class="cover-copy"><strong>You play as Kael Vorn.</strong> The world has begun to know what he can do before he has decided what that means. He is a soldier, a captain, and a man whose name is becoming useful in ways that should worry him.</p>
+      <p class="cover-copy">Below a storm-dark ridge, a caravan burns on the eastern road. Civilians are trapped near the wheels. A raider captain holds the attack together. Kael sees the field clearly. That is not the same as knowing the right choice.</p>
       <div class="cover-actions">
         <button id="continueBtn" class="primary">Continue session</button>
-        <button id="startBtn" class="ghost">Start new session</button>
+        <button id="startBtn" class="ghost">Begin on the Ridge</button>
       </div>
       <p id="coverStatus" class="cover-status">Checking local session state.</p>
     </div>
   </section>
 
-  <div class="app-shell">
-    <header class="topbar">
+  <div class="app-shell play-shell">
+    <header class="topbar compact-topbar">
       <div>
         <p class="eyebrow">Vallum Engine · Stormwright Table</p>
         <h1 id="campaignTitle">The Noise of Purpose</h1>
       </div>
-      <div class="topbar-actions">
+      <div class="topbar-actions compact-actions">
         <span id="saveStatus" class="status-chip">Local save ready</span>
-        <span id="ambienceState" class="status-chip">Ambience off</span>
-        <button id="newGameBtn" class="ghost">New session</button>
-        <button id="saveBtn" class="ghost">Save</button>
-        <button id="ambienceBtn" class="primary">Start ambience</button>
+        <button id="saveBtn" class="ghost compact-control">Save</button>
+        <button id="newGameBtn" class="ghost compact-control">New</button>
+        <button id="ambienceBtn" class="primary music-toggle" aria-label="Toggle music">M</button>
+        <span id="ambienceState" class="status-chip subtle-chip">Off</span>
       </div>
     </header>
 
-    <main class="game-layout">
-      <section class="table-panel" aria-label="Game table">
+    <main class="play-layout">
+      <aside class="gm-panel" aria-label="Game master guidance">
+        <div class="panel-header stacked-header">
+          <div>
+            <p class="eyebrow">Game Master</p>
+            <h2 id="sceneTitle">Loading</h2>
+          </div>
+          <div id="sceneType" class="scene-type">Scene</div>
+        </div>
+        <section class="gm-brief">
+          <p class="outcome-label">Situation</p>
+          <div id="sceneMood" class="mood-card">Stakes: Loading</div>
+        </section>
+        <section class="gm-actions">
+          <p class="outcome-label">Available Actions</p>
+          <div id="choiceList" class="choices"></div>
+        </section>
+      </aside>
+
+      <section class="table-panel centre-table" aria-label="Game table">
         <div class="panel-header">
           <div>
             <p class="eyebrow">Battlefield Tableau</p>
@@ -69,41 +88,28 @@
           </svg>
         </div>
 
-        <div class="table-footer">
-          <div id="sceneMood" class="mood-card">Stakes: Loading</div>
-          <div id="diceLog" class="dice-log">Stormwright table ready.</div>
-        </div>
-      </section>
-
-      <section class="story-panel" aria-label="Game master narration">
-        <div class="panel-header">
-          <div>
-            <p class="eyebrow">Game Master</p>
-            <h2 id="sceneTitle">Loading</h2>
-          </div>
-          <div id="sceneType" class="scene-type">Scene</div>
-        </div>
-
-        <article id="narration" class="narration"></article>
-
-        <section id="outcomePanel" class="outcome-panel" aria-label="Latest outcome">
-          <p class="outcome-label">Latest outcome</p>
-          <div id="outcomeText">No choices resolved yet.</div>
+        <section class="scenario-panel" aria-label="Scenario narration">
+          <p class="outcome-label">Scenario</p>
+          <article id="narration" class="narration"></article>
         </section>
 
-        <div id="choiceList" class="choices"></div>
-
-        <div class="lower-grid">
-          <section class="party-card">
-            <div class="section-title">Kael and State</div>
-            <div id="partyList"></div>
-          </section>
-          <section class="journal-card">
-            <div class="section-title">Account</div>
-            <div id="journalList"></div>
-          </section>
-        </div>
+        <section id="outcomePanel" class="outcome-panel" aria-label="What changed">
+          <p class="outcome-label">What Changed</p>
+          <div id="outcomeText">No choices resolved yet.</div>
+        </section>
+        <div id="diceLog" class="dice-log hidden-rolls">Rolls hidden. The Game Master keeps the dice behind the screen.</div>
       </section>
+
+      <aside class="character-panel" aria-label="Character and account">
+        <section class="party-card kael-card">
+          <div class="section-title">Kael Vorn</div>
+          <div id="partyList"></div>
+        </section>
+        <section class="journal-card account-card">
+          <div class="section-title">The Account</div>
+          <div id="journalList"></div>
+        </section>
+      </aside>
     </main>
   </div>
 
