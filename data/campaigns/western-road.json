@@ -1,0 +1,349 @@
+{
+  "id": "western-road",
+  "title": "The Western Road",
+  "region": "Rain Road Marches",
+  "startingScene": "crossroads-inn",
+  "initialTime": {
+    "day": 1,
+    "phase": "Dawn"
+  },
+  "party": [
+    {
+      "id": "maera",
+      "name": "Maera Voss",
+      "role": "Wardblade",
+      "drive": "Protect the road villages from things older than kings.",
+      "hp": 18,
+      "maxHp": 18,
+      "defence": 12,
+      "attack": 4
+    },
+    {
+      "id": "kael",
+      "name": "Kael Orison",
+      "role": "Ash Scholar",
+      "drive": "Learn why the old stones have begun to sing again.",
+      "hp": 12,
+      "maxHp": 12,
+      "defence": 10,
+      "attack": 3
+    },
+    {
+      "id": "torren",
+      "name": "Torren Pike",
+      "role": "Road Warden",
+      "drive": "Keep the party alive long enough to get paid.",
+      "hp": 16,
+      "maxHp": 16,
+      "defence": 11,
+      "attack": 3
+    },
+    {
+      "id": "sella",
+      "name": "Sella Myr",
+      "role": "Oath Singer",
+      "drive": "Bind fear into courage before the dark finds a name.",
+      "hp": 14,
+      "maxHp": 14,
+      "defence": 10,
+      "attack": 2
+    }
+  ],
+  "locations": [
+    {
+      "id": "crossroads-inn",
+      "name": "The Crooked Lantern",
+      "x": 180,
+      "y": 420,
+      "kind": "settlement"
+    },
+    {
+      "id": "rain-road",
+      "name": "Rain Road",
+      "x": 390,
+      "y": 340,
+      "kind": "road"
+    },
+    {
+      "id": "broken-marker",
+      "name": "Broken Mile Marker",
+      "x": 560,
+      "y": 260,
+      "kind": "site"
+    },
+    {
+      "id": "watchtower",
+      "name": "Old West Tower",
+      "x": 760,
+      "y": 190,
+      "kind": "dungeon"
+    },
+    {
+      "id": "return-road",
+      "name": "Return Road",
+      "x": 630,
+      "y": 445,
+      "kind": "road"
+    }
+  ],
+  "routes": [
+    ["crossroads-inn", "rain-road"],
+    ["rain-road", "broken-marker"],
+    ["broken-marker", "watchtower"],
+    ["watchtower", "return-road"],
+    ["return-road", "crossroads-inn"]
+  ],
+  "scenes": {
+    "crossroads-inn": {
+      "title": "Rain on the Crooked Lantern",
+      "type": "Tavern",
+      "location": "crossroads-inn",
+      "mood": "Rain, candle smoke, low voices, old wood.",
+      "ambience": "rain",
+      "narration": [
+        "The Crooked Lantern leans into the rain as if the weather has been pushing against it for a hundred years. Inside, the hearth burns low, mugs sit untouched, and every conversation dies when the western door opens.",
+        "A road warden with mud to the knees tells you the same thing twice: three carts left for the old tower road. None arrived. At dawn, a boy found one wheel spinning by itself beside a broken mile marker."
+      ],
+      "choices": [
+        {
+          "label": "Take the western road at once.",
+          "result": "The party leaves before the innkeeper can decide whether to ask for payment in advance.",
+          "nextScene": "rain-road",
+          "time": "Morning"
+        },
+        {
+          "label": "Question the road warden for details.",
+          "roll": {
+            "stat": "Insight",
+            "target": 11,
+            "success": "The warden admits the missing carts carried sealed iron caskets marked with an old royal sigil.",
+            "failure": "The warden knows fear better than facts. He only saw the wheel and the mud."
+          },
+          "journal": "The missing carts may have carried sealed iron caskets.",
+          "nextScene": "rain-road",
+          "time": "Morning"
+        },
+        {
+          "label": "Buy supplies and leave prepared.",
+          "result": "You lose an hour but gain rope, dry tinder, and oilcloth. Torren approves without smiling.",
+          "journal": "The party bought rope, dry tinder, and oilcloth before leaving.",
+          "nextScene": "rain-road",
+          "time": "Late Morning"
+        },
+        {
+          "label": "Ignore the rumour and listen for something stranger.",
+          "roll": {
+            "stat": "Lore",
+            "target": 13,
+            "success": "Kael hears the innkeeper whisper an older name for the tower: Varric's Last Door.",
+            "failure": "The rain swallows every useful word. The room gives you nothing but suspicion."
+          },
+          "journal": "The old tower may once have been called Varric's Last Door.",
+          "nextScene": "rain-road",
+          "time": "Morning"
+        }
+      ]
+    },
+    "rain-road": {
+      "title": "The Road That Drinks Sound",
+      "type": "Travel",
+      "location": "rain-road",
+      "mood": "Open road, heavy rain, distant thunder.",
+      "ambience": "rain",
+      "narration": [
+        "By mid-morning the town is gone behind a curtain of rain. The road runs between black grass and low stone walls. No birds. No cart tracks except the three you were told about, pressed deep into the mud and heading west.",
+        "After two hours, the rain changes. It no longer falls cleanly. It bends toward the road ahead."
+      ],
+      "choices": [
+        {
+          "label": "Keep to the road and conserve strength.",
+          "result": "You move steadily, boots sinking and rising in the red-brown mud.",
+          "nextScene": "broken-marker",
+          "time": "Afternoon"
+        },
+        {
+          "label": "Send Torren ahead to scout.",
+          "roll": {
+            "stat": "Caution",
+            "target": 10,
+            "success": "Torren finds a second set of tracks beside the carts. Bare feet. Long stride. Too many toes.",
+            "failure": "Torren vanishes into the rain for ten minutes and returns colder than he should be."
+          },
+          "journal": "Something walked beside the missing carts.",
+          "nextScene": "broken-marker",
+          "time": "Afternoon"
+        },
+        {
+          "label": "Let Sella sing the roadward oath.",
+          "roll": {
+            "stat": "Resolve",
+            "target": 12,
+            "success": "The song pushes a circle of stillness around the party. For a while, the rain cannot touch your faces.",
+            "failure": "The song comes back wrong, sung by another voice under the mud."
+          },
+          "nextScene": "broken-marker",
+          "time": "Afternoon"
+        },
+        {
+          "label": "Leave the road and approach through the fields.",
+          "result": "The fields are worse. Cold water fills every footprint. You gain no advantage and arrive tired.",
+          "damage": {
+            "target": "party",
+            "amount": 1,
+            "reason": "exhaustion from flooded ground"
+          },
+          "nextScene": "broken-marker",
+          "time": "Afternoon"
+        }
+      ]
+    },
+    "broken-marker": {
+      "title": "The Wheel Beside the Marker",
+      "type": "Encounter",
+      "location": "broken-marker",
+      "mood": "Wind, mud, broken stone, something waiting.",
+      "ambience": "wind",
+      "narration": [
+        "The mile marker lies split in two. One half still shows the old road number. The other half has been turned over and carved with fresh marks that look like hooks, doors, and open eyes.",
+        "A cart wheel spins in the mud without axle or hand. Around it stand three shapes wrapped in sacking and old rope. When Maera draws steel, the shapes turn together."
+      ],
+      "encounter": {
+        "name": "Mud-Wrapped Things",
+        "enemyHp": 16,
+        "enemyAttack": 4,
+        "target": 12,
+        "victoryScene": "watchtower",
+        "defeatScene": "return-road"
+      },
+      "choices": [
+        {
+          "label": "Form ranks and fight cleanly.",
+          "combat": "standard"
+        },
+        {
+          "label": "Have Kael burn the markings on the stone first.",
+          "roll": {
+            "stat": "Lore",
+            "target": 12,
+            "success": "The markings flare blue-white. The wrapped things recoil before the fight begins.",
+            "failure": "The markings drink the heat and answer with a pulse of cold."
+          },
+          "combat": "weakened"
+        },
+        {
+          "label": "Let Sella challenge whatever commands them.",
+          "roll": {
+            "stat": "Resolve",
+            "target": 13,
+            "success": "Her voice cuts through the rain. One of the shapes collapses as if its strings were cut.",
+            "failure": "Something answers through her last note. Everyone hears their own name."
+          },
+          "combat": "risky"
+        },
+        {
+          "label": "Retreat and mark the road as cursed.",
+          "result": "You pull back before the first blow. The western road keeps its secret for now.",
+          "journal": "The party retreated from the broken mile marker.",
+          "nextScene": "return-road",
+          "time": "Dusk"
+        }
+      ]
+    },
+    "watchtower": {
+      "title": "Old West Tower",
+      "type": "Dungeon Threshold",
+      "location": "watchtower",
+      "mood": "Stone, iron, deep water, blue fire behind a sealed door.",
+      "ambience": "dungeon",
+      "narration": [
+        "The old tower waits above the road, roofless and black against the storm. The missing carts are there, drawn up in a perfect line. Their horses are gone. Their cargo is not.",
+        "Three iron caskets sit at the tower door. Each has been opened from the inside. Beyond them, blue fire burns in a stairwell descending beneath the hill. This is where the first session ends."
+      ],
+      "choices": [
+        {
+          "label": "End the session and save at the tower door.",
+          "result": "The party marks the old tower as the next descent point. The road behind them is no longer ordinary.",
+          "journal": "Session complete: the party reached Old West Tower and found the opened iron caskets.",
+          "nextScene": "watchtower",
+          "time": "Dusk"
+        },
+        {
+          "label": "Inspect the opened caskets.",
+          "roll": {
+            "stat": "Lore",
+            "target": 12,
+            "success": "The caskets were not prisons. They were travelling seals, meant to keep something asleep between towns.",
+            "failure": "The inside of each casket is dry, warm, and scratched by human fingernails."
+          },
+          "journal": "The iron caskets may have been travelling seals, not prisons.",
+          "nextScene": "watchtower",
+          "time": "Dusk"
+        },
+        {
+          "label": "Recover and tend wounds before descending later.",
+          "heal": {
+            "target": "party",
+            "amount": 2,
+            "reason": "brief rest at the tower door"
+          },
+          "journal": "The party took a brief rest at Old West Tower.",
+          "nextScene": "watchtower",
+          "time": "Night"
+        },
+        {
+          "label": "Return to the inn with proof of what you found.",
+          "result": "You take a broken casket latch and the road number from the shattered marker. It will be enough to make the room go silent again.",
+          "journal": "The party returned with proof from Old West Tower.",
+          "nextScene": "return-road",
+          "time": "Night"
+        }
+      ]
+    },
+    "return-road": {
+      "title": "The Long Road Back",
+      "type": "Return",
+      "location": "return-road",
+      "mood": "Wet cloaks, fading light, survival.",
+      "ambience": "wind",
+      "narration": [
+        "The road back feels longer than the road out. The rain loosens after sunset, but the silence remains. No one at the Crooked Lantern will like what you bring back.",
+        "For now, the party lives. The western road has opened its first door."
+      ],
+      "choices": [
+        {
+          "label": "Return to the Crooked Lantern and end the session.",
+          "result": "The inn door closes behind you. The first tale of the Rain Road Marches is complete.",
+          "journal": "Session complete: the party returned alive from the western road.",
+          "nextScene": "crossroads-inn",
+          "time": "Night"
+        },
+        {
+          "label": "Make camp outside town and keep watch.",
+          "roll": {
+            "stat": "Caution",
+            "target": 11,
+            "success": "At midnight, Maera sees a blue light moving on the tower road where no lantern should be.",
+            "failure": "Everyone sleeps badly. In the morning, there is mud on the inside of the bedrolls."
+          },
+          "journal": "A blue light may still move on the tower road at night.",
+          "nextScene": "crossroads-inn",
+          "time": "Dawn"
+        },
+        {
+          "label": "Let Kael record the signs before memory changes them.",
+          "result": "Kael draws the hook-door-eye mark three times. The third drawing is different from the first two.",
+          "journal": "The hook-door-eye symbol changes when copied.",
+          "nextScene": "crossroads-inn",
+          "time": "Night"
+        },
+        {
+          "label": "Bind the party oath before speaking to anyone else.",
+          "result": "Sella names the rule aloud: no one tells the story alone. Whatever follows, the party carries the truth together.",
+          "journal": "The party swore not to carry the road's truth alone.",
+          "nextScene": "crossroads-inn",
+          "time": "Night"
+        }
+      ]
+    }
+  }
+}
