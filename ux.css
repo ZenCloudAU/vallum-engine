@@ -75,6 +75,44 @@
   letter-spacing: 0.14em;
 }
 
+.outcome-grid,
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.outcome-grid div,
+.report-grid div {
+  border: 1px solid rgba(216, 189, 132, 0.12);
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.outcome-grid span,
+.report-grid span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.outcome-grid strong,
+.report-grid strong {
+  display: block;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.aftermath-report {
+  margin-top: 14px;
+  border-top: 1px solid rgba(216, 189, 132, 0.18);
+  padding-top: 12px;
+}
+
 .character { cursor: pointer; }
 .character:hover .character-name { color: var(--gold); }
 .route-active { stroke: rgba(216, 189, 132, 0.78) !important; stroke-width: 12 !important; }
@@ -82,6 +120,17 @@
 
 .storm-choice:hover {
   background: rgba(216, 189, 132, 0.075);
+}
+
+.choice-title,
+.choice-meta {
+  display: block;
+}
+
+.choice-meta {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.82rem;
 }
 
 .storm-state-panel {
@@ -101,6 +150,16 @@
   padding: 6px 0;
   border-top: 1px solid rgba(216, 189, 132, 0.08);
   color: var(--muted);
+}
+
+.state-line em {
+  display: block;
+  margin-top: 2px;
+  color: rgba(183, 170, 149, 0.72);
+  font-size: 0.74rem;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .state-line strong {
@@ -153,3 +212,10 @@
 .drawer-stat { border: 1px solid var(--line); border-radius: 14px; padding: 10px; background: rgba(255,255,255,0.035); }
 .drawer-stat strong { display: block; color: var(--text); }
 .drawer-stat span { color: var(--muted); font-size: 0.82rem; }
+
+@media (max-width: 900px) {
+  .outcome-grid,
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+}
