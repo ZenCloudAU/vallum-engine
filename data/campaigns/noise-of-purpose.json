@@ -1,0 +1,174 @@
+{
+  "id": "noise-of-purpose",
+  "title": "The Noise of Purpose",
+  "region": "Eastern Marches",
+  "series": "The Stormwright Cycle",
+  "canonStatus": "Adapted vertical slice from Book I, Chapter 1",
+  "startingScene": "ridge",
+  "initialTime": {
+    "day": 1,
+    "phase": "Stormlight"
+  },
+  "objectives": {
+    "civilians": 6,
+    "raiderThreat": 8,
+    "captainPressure": 6
+  },
+  "moralState": {
+    "force": 4,
+    "restraint": 2,
+    "witness": 2,
+    "hollow": 0,
+    "reputation": 3
+  },
+  "party": [
+    {
+      "id": "kael",
+      "name": "Kael Vorn",
+      "role": "Iron Captain",
+      "drive": "He is very good at the thing the world keeps asking him to be.",
+      "hp": 20,
+      "maxHp": 20,
+      "defence": 13,
+      "attack": 5
+    }
+  ],
+  "locations": [
+    { "id": "ridge", "name": "Ridge", "x": 190, "y": 150, "kind": "kael" },
+    { "id": "caravan", "name": "Burning Caravan", "x": 520, "y": 335, "kind": "fire" },
+    { "id": "civilians", "name": "Civilians", "x": 355, "y": 455, "kind": "objective" },
+    { "id": "captain", "name": "Raider Captain", "x": 745, "y": 235, "kind": "threat" },
+    { "id": "road", "name": "Eastern Road", "x": 670, "y": 505, "kind": "road" }
+  ],
+  "routes": [
+    ["ridge", "caravan"],
+    ["ridge", "civilians"],
+    ["caravan", "captain"],
+    ["civilians", "road"],
+    ["captain", "road"]
+  ],
+  "scenes": {
+    "ridge": {
+      "title": "The Ridge Above the Fire",
+      "type": "Crisis",
+      "location": "ridge",
+      "mood": "Storm wind, smoke, wet leather, purpose narrowing into violence.",
+      "ambience": "storm",
+      "stakes": "Six civilians are exposed below. The raider captain is holding the attack together. Kael cannot answer both problems cleanly.",
+      "narration": [
+        "The caravan burns below the ridge. Smoke folds into the rain and makes the road look smaller than it is. The raiders move badly except near their captain, where they move with shape.",
+        "Kael sees the whole field before he decides what any of it means. Civilians under the wheels. Two raiders breaking toward them. The captain turning his horse in the road, smiling as if he has already understood the choice being offered."
+      ],
+      "choices": [
+        {
+          "label": "Cut the head. Break the captain before the attack has a centre.",
+          "roll": { "stat": "force", "target": 11, "success": "Kael descends like the decision has already been made. The captain's line buckles.", "failure": "The descent is fast but not clean. The captain gives ground and the field widens around him." },
+          "objectives": { "raiderThreat": -3, "captainPressure": -4, "civilians": -2 },
+          "moral": { "force": 1, "hollow": 2, "reputation": 1 },
+          "journal": "Kael chose the captain first. The field answered in screams behind him.",
+          "nextScene": "surge",
+          "time": "Blood Rain"
+        },
+        {
+          "label": "Move for the civilians. Put steel between them and the road.",
+          "roll": { "stat": "restraint", "target": 12, "success": "He turns away from the cleanest target and reaches the civilians before the raiders do.", "failure": "He reaches them late enough to know what late means." },
+          "objectives": { "civilians": 2, "captainPressure": 2, "raiderThreat": -1 },
+          "moral": { "restraint": 1, "witness": 1, "hollow": 1 },
+          "journal": "Kael chose the civilians first. The captain remained in the road.",
+          "nextScene": "civilians",
+          "time": "Blood Rain"
+        },
+        {
+          "label": "Command the men. Make the field answer to him.",
+          "roll": { "stat": "reputation", "target": 12, "success": "The men hear the name before the orders. For once, the name is useful.", "failure": "The orders are sound. The field is louder." },
+          "objectives": { "civilians": 1, "raiderThreat": -2, "captainPressure": -1 },
+          "moral": { "force": 1, "reputation": 2, "hollow": 1 },
+          "journal": "Kael used the name the world had given him.",
+          "nextScene": "command",
+          "time": "Blood Rain"
+        },
+        {
+          "label": "Hold one breath. Read the field before becoming part of it.",
+          "roll": { "stat": "witness", "target": 13, "success": "The attack is not random. The captain is driving the civilians into the road to force pursuit.", "failure": "The breath costs him. The field does not pause because he does." },
+          "objectives": { "captainPressure": -1, "civilians": -1 },
+          "moral": { "witness": 2, "restraint": 1, "hollow": 1 },
+          "journal": "Kael looked before acting. Seeing did not make the choice cleaner.",
+          "nextScene": "surge",
+          "time": "Blood Rain"
+        }
+      ]
+    },
+    "civilians": {
+      "title": "The Wheels and the Screaming",
+      "type": "Protection",
+      "location": "civilians",
+      "mood": "Mud, broken wheels, panic, the hard work of not becoming a blade first.",
+      "ambience": "storm",
+      "stakes": "The civilians can still be moved toward the eastern road, but the captain is using the delay.",
+      "narration": [
+        "A woman is pinned under a cracked wheel. A boy is trying to pull her free with both hands and no leverage. Kael reaches them with the storm behind him and the captain still alive in the road.",
+        "This is not the clean part of battle. This is weight, mud, fear, and the ugly arithmetic of seconds."
+      ],
+      "choices": [
+        { "label": "Lift the wheel and order the soldiers to cover the road.", "roll": { "stat": "force", "target": 10, "success": "The wheel comes up. The woman breathes once and begins crawling.", "failure": "The wheel shifts but does not clear. The boy will remember the sound." }, "objectives": { "civilians": 2, "raiderThreat": -1 }, "moral": { "force": 1, "witness": 1 }, "journal": "Kael used strength for protection, not pursuit.", "nextScene": "aftermath", "time": "After" },
+        { "label": "Abandon the wheel and take the captain before more raiders arrive.", "roll": { "stat": "force", "target": 11, "success": "He leaves the wheel and reaches the road with killing clarity.", "failure": "He leaves the wheel and still arrives late." }, "objectives": { "civilians": -2, "captainPressure": -3, "raiderThreat": -2 }, "moral": { "force": 1, "hollow": 2, "reputation": 1 }, "journal": "Kael left the trapped behind to regain the centre of the field.", "nextScene": "surge", "time": "After" },
+        { "label": "Stay with the trapped and let the captain go.", "roll": { "stat": "restraint", "target": 12, "success": "The captain escapes. Four civilians live because Kael did not follow.", "failure": "The captain escapes and the work still costs blood." }, "objectives": { "civilians": 3, "captainPressure": 3 }, "moral": { "restraint": 2, "witness": 1, "hollow": 1 }, "journal": "Kael let the captain go because the living were still in reach.", "nextScene": "aftermath", "time": "After" },
+        { "label": "Look at the boy and tell him exactly what to do.", "roll": { "stat": "witness", "target": 11, "success": "The boy stops screaming and starts listening. That saves more time than strength would have.", "failure": "The boy hears only the fire." }, "objectives": { "civilians": 1 }, "moral": { "witness": 2, "restraint": 1 }, "journal": "Kael found one living mind inside the panic and gave it shape.", "nextScene": "aftermath", "time": "After" }
+      ]
+    },
+    "command": {
+      "title": "The Name Used as a Tool",
+      "type": "Command",
+      "location": "caravan",
+      "mood": "Orders, smoke, obedience, the dangerous comfort of being legible.",
+      "ambience": "storm",
+      "stakes": "The field responds to Kael's reputation. That makes the problem easier and the name harder to lay down later.",
+      "narration": [
+        "When Kael gives the first order, the men move. Not because the order is brilliant. Because it is his voice. Because the name has already done part of the work.",
+        "The Iron Captain is useful. That is the first danger of it."
+      ],
+      "choices": [
+        { "label": "Drive the men at the captain and accept the cost.", "roll": { "stat": "force", "target": 10, "success": "The line punches through. The captain's horse rears under the pressure.", "failure": "The line hits unevenly and men fall where the order put them." }, "objectives": { "captainPressure": -3, "raiderThreat": -3, "civilians": -1 }, "moral": { "force": 1, "reputation": 1, "hollow": 2 }, "journal": "Kael turned reputation into pressure.", "nextScene": "surge", "time": "After" },
+        { "label": "Split the men. Half to civilians, half to the road.", "roll": { "stat": "witness", "target": 12, "success": "The split is ugly but enough. The field holds in two places.", "failure": "The split weakens both halves. The captain sees it immediately." }, "objectives": { "civilians": 1, "raiderThreat": -1 }, "moral": { "witness": 1, "reputation": 1, "hollow": 1 }, "journal": "Kael tried to make an imperfect field hold two truths at once.", "nextScene": "aftermath", "time": "After" },
+        { "label": "Refuse the name. Give the order plainly, without theatre.", "roll": { "stat": "restraint", "target": 13, "success": "The men obey the order instead of the legend. Fewer move, but they move cleanly.", "failure": "Without the name, hesitation enters the line." }, "objectives": { "civilians": 1, "reputation": -1 }, "moral": { "restraint": 2, "hollow": -1 }, "journal": "Kael tried to command without feeding the Iron Captain.", "nextScene": "aftermath", "time": "After" },
+        { "label": "Let the name roar because it works.", "roll": { "stat": "reputation", "target": 9, "success": "The men become certain. Certainty moves fast.", "failure": "The certainty becomes noise and men mistake movement for judgement." }, "objectives": { "raiderThreat": -3, "captainPressure": -2 }, "moral": { "reputation": 2, "force": 1, "hollow": 2 }, "journal": "The Iron Captain grew larger because it solved the immediate problem.", "nextScene": "surge", "time": "After" }
+      ]
+    },
+    "surge": {
+      "title": "The Surge",
+      "type": "Violence",
+      "location": "captain",
+      "mood": "The world narrows. Rain, blade, horse breath, one man smiling.",
+      "ambience": "storm",
+      "stakes": "The captain can be broken. The question is what else narrows with him.",
+      "narration": [
+        "The field becomes simple in the way violence sometimes lies by becoming simple. The captain is there. The line is there. The distance is countable.",
+        "Kael feels the surge arrive. Not madness. Not rage. Purpose. That is why it is dangerous."
+      ],
+      "choices": [
+        { "label": "Take the captain cleanly.", "roll": { "stat": "force", "target": 10, "success": "The captain's smile breaks before his guard does. Then both are gone.", "failure": "The captain survives the first exchange and sees something in Kael worth fearing." }, "objectives": { "captainPressure": -5, "raiderThreat": -2, "civilians": -1 }, "moral": { "force": 1, "hollow": 2, "reputation": 1 }, "journal": "Kael broke the captain and felt the clarity of it.", "nextScene": "aftermath", "time": "After" },
+        { "label": "Disable him and leave him alive for answers.", "roll": { "stat": "restraint", "target": 13, "success": "Kael changes the cut at the last moment. The captain falls alive and furious.", "failure": "The change comes too late to be mercy and too early to be clean." }, "objectives": { "captainPressure": -3, "raiderThreat": -1 }, "moral": { "restraint": 2, "witness": 1, "hollow": 1 }, "journal": "Kael chose an answer over a body.", "nextScene": "aftermath", "time": "After" },
+        { "label": "Look past the captain for the real objective.", "roll": { "stat": "witness", "target": 13, "success": "The captain is bait. The raiders are pulling something from the second wagon.", "failure": "The captain remains the whole world because Kael lets him." }, "objectives": { "captainPressure": 1, "raiderThreat": -2 }, "moral": { "witness": 2, "hollow": 1 }, "journal": "Kael saw the shape behind the visible threat.", "nextScene": "aftermath", "time": "After" },
+        { "label": "Step back from the surge before it decides for him.", "roll": { "stat": "restraint", "target": 14, "success": "The space between urge and act is almost nothing. It is still enough.", "failure": "He tries to step back and discovers how much of him has already moved." }, "objectives": { "civilians": 1, "captainPressure": 1 }, "moral": { "restraint": 2, "hollow": -1, "reputation": -1 }, "journal": "Kael found the edge of the surge and did not immediately cross it.", "nextScene": "aftermath", "time": "After" }
+      ]
+    },
+    "aftermath": {
+      "title": "After the Road Goes Quiet",
+      "type": "Aftermath",
+      "location": "road",
+      "mood": "Rain on ash, men counting bodies, the silence after purpose leaves.",
+      "ambience": "rain",
+      "stakes": "What happened can be reported as victory. That does not make the account accurate.",
+      "narration": [
+        "Afterward, the road is smaller again. The rain works at the blood and does not clean it. Men begin counting what can be counted because the rest has no agreed measure.",
+        "Kael stands where the field left him. The captain is gone, dead, broken, escaped, or named. Civilians live or do not. The men look to Kael for the shape of the story."
+      ],
+      "choices": [
+        { "label": "Write the report as a clean victory.", "roll": { "stat": "reputation", "target": 9, "success": "The account will travel well. It will also be less true than it should be.", "failure": "Even the clean version will not hold under every eye." }, "moral": { "reputation": 2, "hollow": 2 }, "journal": "The report made the victory cleaner than the road was.", "nextScene": "aftermath", "time": "Night" },
+        { "label": "Name the civilian cost in the account.", "roll": { "stat": "witness", "target": 11, "success": "The words sit badly on the page because they belong there.", "failure": "The account names the cost and still avoids the part that matters." }, "moral": { "witness": 2, "hollow": -1, "reputation": -1 }, "journal": "Kael put the cost into the account instead of outside it.", "nextScene": "aftermath", "time": "Night" },
+        { "label": "Say nothing and let the men tell it.", "roll": { "stat": "restraint", "target": 10, "success": "The story leaves him and becomes larger before sunset.", "failure": "Silence does not prevent the legend. It only removes his hand from it." }, "moral": { "reputation": 1, "hollow": 1 }, "journal": "Kael let others shape the story of the road.", "nextScene": "aftermath", "time": "Night" },
+        { "label": "End the session at the edge of the hollow.", "result": "The module ends with no clean answer. Only the field, the account, and the first pressure of what Kael has become.", "journal": "Session complete: The Noise of Purpose.", "nextScene": "aftermath", "time": "Night" }
+      ]
+    }
+  }
+}
