@@ -21,27 +21,28 @@ A release is not complete because code is committed. A release is complete only 
 
 | Release | UAT Target | Status |
 |---|---|---|
-| v0.3.2 Interactive Recovery | Restore clickable play without returning to the previous crash path. | Pending live test |
+| v0.3.3 Engine Reconnection | Full engine (app.js) live. All DOM IDs present. setStatus() defined. No crash on choice click. | Pending founder live test |
+| v0.3.2 Interactive Recovery | Superseded by v0.3.3. stable-play.js emergency path retired. | Closed |
 
 ## Internal UAT matrix
 
 | Test ID | Area | Test Scenario | Expected Result | Pass / Fail | Notes |
 |---|---|---|---|---|---|
-| UAT-001 | Load | Open the live GitHub Pages site. | Landing page loads without blank screen or crash. | Pending | Use hard refresh if cached. |
-| UAT-002 | Landing | Click Begin on the Ridge. | Landing closes or table becomes playable without crash. | Pending | First critical gate. |
-| UAT-003 | Layout | Review desktop layout. | Game Master is left, map is central, Kael/account is right, scenario and outcome are below map. | Pending | Must be reviewed on large screen. |
-| UAT-004 | Choice Interaction | Click each available action from the first scene in separate test runs. | Action is clickable and updates the story state. | Pending | No dead buttons allowed. |
-| UAT-005 | Scene Transition | Choose a path to civilians, command, surge, and aftermath. | Scene title, situation, scenario, choices, and token position update. | Pending | Core game loop. |
-| UAT-006 | Kael State | Trigger choices that change Force, Restraint, Witness, Hollow, or Reputation. | Right panel updates with changed state labels. | Pending | Must remain readable. |
-| UAT-007 | Field State | Trigger choices that change civilians, raider threat, or captain pressure. | Field state changes are reflected in the right panel or outcome text. | Pending | Needed for moral battlefield. |
-| UAT-008 | Account | Make two or more choices. | The Account records recent consequences in reverse chronological order. | Pending | Should read like an in-world account, not debug log. |
-| UAT-009 | Outcome | Make a choice. | What Changed updates with the immediate consequence and state change. | Pending | No raw dice shown. |
-| UAT-010 | Map | Make choices that move Kael. | Kael token moves to the relevant battlefield location. | Pending | Symbolic movement is acceptable. |
-| UAT-011 | Restart | Click New or reload the page. | User can return to a clean starting state or reload without crash. | Pending | Recovery behaviour must be predictable. |
-| UAT-012 | Visual Load | Review full screen at normal distance. | Player can immediately identify map, action choices, Kael, and outcome without overload. | Pending | Executive/game feel test. |
-| UAT-013 | Comprehension | Read landing and first table screen. | Player understands who Kael is, where he is, what is happening, and what the decision pressure is. | Pending | Critical for engagement. |
-| UAT-014 | Stormwright Tone | Review copy and outcome language. | Tone feels restrained, severe, moral, and Stormwright-specific. | Pending | Avoid generic fantasy. |
-| UAT-015 | Regression | Confirm no external runtime crash path remains. | Page continues to function after refresh and action click. | Pending | Stability gate. |
+| UAT-001 | Load | Open the live GitHub Pages site. | Landing page loads without blank screen or crash. | Static PASS — server returns 200, HTML valid | Hard refresh required on GitHub Pages after push. |
+| UAT-002 | Landing | Click Begin on the Ridge. | Landing closes or table becomes playable without crash. | Static PASS — startBtn present, closeCover() wired | Requires founder live test to confirm no browser error. |
+| UAT-003 | Layout | Review desktop layout. | Game Master is left, map is central, Kael/account is right, scenario and outcome are below map. | Static PASS — 3-zone play-layout grid confirmed in HTML | Must be reviewed on large screen. |
+| UAT-004 | Choice Interaction | Click each available action from the first scene in separate test runs. | Action is clickable and updates the story state. | Static PASS — renderChoices() builds buttons with listeners; setStatus() defined; no ReferenceError path | Requires founder live click test. |
+| UAT-005 | Scene Transition | Choose a path to civilians, command, surge, and aftermath. | Scene title, situation, scenario, choices, and token position update. | Static PASS — scene graph fully connected; all 5 scenes verified | Requires founder live test across all paths. |
+| UAT-006 | Kael State | Trigger choices that change Force, Restraint, Witness, Hollow, or Reputation. | Right panel updates with changed state labels. | Static PASS — renderCharacterPanel() reads moralState and renders label functions | Requires founder live test. |
+| UAT-007 | Field State | Trigger choices that change civilians, raider threat, or captain pressure. | Field state changes are reflected in the right panel or outcome text. | Static PASS — applyDelta wired to objectives; capped 0–10 | Requires founder live test. |
+| UAT-008 | Account | Make two or more choices. | The Account records recent consequences in reverse chronological order. | Static PASS — renderJournal() renders last 6 entries reversed | Requires founder live test. |
+| UAT-009 | Outcome | Make a choice. | What Changed updates with the immediate consequence and state change. | Static PASS — renderOutcome() reads latestOutcome; setStatus() no longer crashes | Requires founder live test. |
+| UAT-010 | Map | Make choices that move Kael. | Kael token moves to the relevant battlefield location. | Static PASS — renderKaelToken() reads scene.location; all locations defined | Requires founder live test. |
+| UAT-011 | Restart | Click New or reload the page. | User can return to a clean starting state or reload without crash. | Static PASS — startNewSession() clears STORAGE_KEY and re-initialises | Requires founder live test. |
+| UAT-012 | Visual Load | Review full screen at normal distance. | Player can immediately identify map, action choices, Kael, and outcome without overload. | Pending founder review | Cannot verify statically. Requires large screen review. |
+| UAT-013 | Comprehension | Read landing and first table screen. | Player understands who Kael is, where he is, what is happening, and what the decision pressure is. | Pending founder review | Cannot verify statically. Requires first-read test. |
+| UAT-014 | Stormwright Tone | Review copy and outcome language. | Tone feels restrained, severe, moral, and Stormwright-specific. | Pending founder review | Cannot verify statically. Requires world designer read. |
+| UAT-015 | Regression | Confirm no external runtime crash path remains. | Page continues to function after refresh and action click. | Static PASS — setStatus() defined; all DOM IDs present; no uncaught reference paths in choose() | Requires founder live regression run. |
 
 ## Game tester matrix
 
