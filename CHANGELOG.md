@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.3.2 - Layout and engagement correction
+
+Status: committed on main.
+
+Added:
+
+- proper Stormwright prologue landing page
+- explicit player-role introduction for Kael Vorn
+- three-zone play layout: Game Master left, map centre, Kael/account right
+- scenario narration below the central map
+- `What Changed` outcome panel below the map
+- compact `M` music toggle
+- `layout-fix.js` to keep the music control compact after interaction
+
+Changed:
+
+- replaced the previous two-column app layout with a centred play-table structure
+- moved available actions into the left Game Master panel
+- moved character state and account to the right panel
+- hid raw dice log from normal play view
+- reduced top controls to compact save, new session, music, and state indicators
+- landing page now explains who Kael is and why the ridge matters before play begins
+
+Known constraints:
+
+- requires live browser review after GitHub Pages refresh
+- responsive layout falls back to one column under smaller widths
+- Kael panel language may still need tightening after playtest
+- map remains symbolic pending a future battlefield readability pass
+
 ## v0.3.1 - Stormwright game-feel hardening
 
 Status: committed on main.
