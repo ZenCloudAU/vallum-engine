@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.3.1 - Stormwright game-feel hardening
+
+Status: committed on main.
+
+Added:
+
+- structured outcome display with Roll Result, Immediate Consequence, and State Change
+- choice impact hints showing roll tests and state deltas before selection
+- moral-state labels for Force, Restraint, Witness, Hollow, and Reputation
+- objective labels for civilians, raider threat, and captain pressure
+- battlefield zone overlays for ridge, civilians, and captain areas
+- aftermath report on the aftermath scene
+- session-complete flag for the module-ending choice
+- v0.3.1 local save key with migration support from v0.3
+
+Changed:
+
+- latest outcome is now stored as structured state rather than plain text
+- outcome panel now presents consequences as a readable game table
+- account/journal flow now better supports the Stormwright theme of witness and consequence
+- UX styling now supports outcome grids, aftermath grids, and state labels
+
+Known constraints:
+
+- requires live browser testing after GitHub Pages refresh
+- aftermath report is generated from state thresholds and may need wording tuning
+- battlefield remains symbolic rather than illustrated
+
 ## v0.3 - Stormwright playable module execution
 
 Status: committed on main.
