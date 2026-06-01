@@ -4,43 +4,109 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vallum Engine · The Noise of Purpose</title>
-  <style>
-    :root{--bg:#080b0d;--panel:#111618;--line:rgba(216,189,132,.22);--text:#f2eadc;--muted:#b7aa95;--gold:#d8bd84;--red:#9d4f45;--blue:#819fb6;--green:#7d9b75}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,sans-serif}a,button{color:var(--text);text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:10px 14px;display:inline-block}.primary{background:rgba(216,189,132,.22)}.eyebrow{margin:0 0 6px;color:var(--gold);font-size:.74rem;text-transform:uppercase;letter-spacing:.15em}.cover{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 48% 35%,rgba(216,189,132,.14),transparent 28rem),#080b0d}.card{width:min(880px,calc(100vw - 32px));border:1px solid var(--line);border-radius:32px;padding:48px;background:rgba(17,22,24,.98);box-shadow:0 40px 120px rgba(0,0,0,.65)}h1{margin:0;font-size:clamp(3rem,7vw,6rem);letter-spacing:-.06em}p{color:var(--muted);line-height:1.65}.shell{width:min(1920px,calc(100vw - 28px));margin:0 auto;padding:20px 0}.top{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:14px}.top h1{font-size:clamp(1.8rem,2.5vw,3.4rem)}.layout{display:grid;grid-template-columns:minmax(270px,.68fr) minmax(660px,1.55fr) minmax(300px,.78fr);gap:16px;align-items:start}.panel,.centre{border:1px solid var(--line);border-radius:28px;background:rgba(17,22,24,.94);padding:18px}.panel{min-height:calc(100vh - 132px)}h2{margin:0}.section{margin-top:14px}.label{margin:0 0 7px;color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em}.box{border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.035);color:var(--muted)}.choice{width:100%;text-align:left;border-radius:14px;margin-bottom:10px}.map{margin-top:14px;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#0d0e0d}.scenario,.outcome{margin-top:12px;border:1px solid var(--line);border-radius:18px;padding:14px;background:rgba(255,255,255,.025)}.state{display:flex;justify-content:space-between;border-top:1px solid rgba(216,189,132,.12);padding:8px 0;color:var(--muted)}.state strong{color:var(--text)}.account{border-top:1px solid rgba(216,189,132,.12);padding:8px 0;color:var(--muted)}small{color:var(--muted)}@media(max-width:1300px){.layout{grid-template-columns:1fr}.panel{min-height:auto}.top{flex-direction:column;align-items:stretch}}
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="ux.css" />
 </head>
 <body>
-  <section class="cover" id="cover">
-    <div class="card">
-      <p class="eyebrow">The Stormwright Cycle · Interactive Recovery Build</p>
-      <h1>The Noise of Purpose</h1>
-      <p><strong>You play as Kael Vorn.</strong> The world has begun to know what he can do before he has decided what that means.</p>
-      <p>Below a storm-dark ridge, a caravan burns on the eastern road. Civilians are trapped near the wheels. A captain holds the attack together. Kael sees the field clearly. That is not the same as knowing the right choice.</p>
-      <button id="start" class="primary">Begin on the Ridge</button>
+
+  <section class="campaign-cover" id="campaignCover">
+    <div class="cover-card">
+      <p class="eyebrow">The Stormwright Cycle</p>
+      <h1 id="campaignTitle">The Noise of Purpose</h1>
+      <p class="cover-copy prologue-card"><strong>You play as Kael Vorn.</strong> The world has begun to know what he can do before he has decided what that means.</p>
+      <p class="cover-copy">Below a storm-dark ridge, a caravan burns on the eastern road. Civilians are trapped near the wheels. A captain holds the attack together. Kael sees the field clearly. That is not the same as knowing the right choice.</p>
+      <p class="cover-status" id="coverStatus"></p>
+      <div class="cover-actions">
+        <button id="continueBtn" class="primary" hidden>Continue Session</button>
+        <button id="startBtn" class="primary">Begin on the Ridge</button>
+      </div>
     </div>
   </section>
 
-  <main class="shell" id="table">
-    <header class="top">
-      <div><p class="eyebrow">Vallum Engine · Stormwright Table</p><h1>The Noise of Purpose</h1></div>
-      <div><span class="box">Interactive recovery mode</span></div>
+  <div class="play-shell" style="margin: 0 auto; padding: 20px 14px;">
+
+    <header class="topbar compact-topbar" style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:14px; gap:16px; flex-wrap:wrap;">
+      <div>
+        <p class="eyebrow">Vallum Engine · Stormwright Table</p>
+        <h1 id="regionTitle" style="margin:0; font-size:clamp(1.8rem,2.5vw,3.4rem); letter-spacing:-0.04em;"></h1>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <span id="saveStatus" class="status-chip"></span>
+        <span id="ambienceState" class="status-chip subtle-chip">Off</span>
+        <span id="timeBox" class="status-chip"></span>
+        <button id="saveBtn" class="compact-control">Save</button>
+        <button id="newGameBtn" class="compact-control">New</button>
+        <button id="ambienceBtn" class="compact-control music-toggle" title="Toggle Music">M</button>
+      </div>
     </header>
-    <section class="layout">
-      <aside class="panel">
-        <p class="eyebrow">Game Master</p><h2>The Ridge Above the Fire</h2>
-        <div class="section"><p class="label">Situation</p><div class="box">Six civilians are exposed below. The captain is holding the attack together. Kael cannot answer both problems cleanly.</div></div>
-        <div class="section"><p class="label">Available Actions</p><div class="choice">1. Cut the head. Break the captain before the attack has a centre.</div><div class="choice">2. Move for the civilians. Put steel between them and the road.</div><div class="choice">3. Command the men. Make the field answer to him.</div><div class="choice">4. Hold one breath. Read the field before becoming part of it.</div></div>
+
+    <section class="play-layout">
+
+      <aside class="gm-panel">
+        <p class="eyebrow">Game Master</p>
+        <h2 id="sceneTitle" style="margin:6px 0 0;"></h2>
+        <div class="gm-brief" style="margin-top:14px;">
+          <p class="eyebrow" id="sceneType"></p>
+          <div class="mood-card" id="sceneMood"></div>
+        </div>
+        <div class="gm-actions" style="margin-top:14px;">
+          <p class="eyebrow">Available Actions</p>
+          <div id="choiceList"></div>
+        </div>
+        <div id="diceLog" class="hidden-rolls"></div>
       </aside>
-      <section class="centre">
-        <div><p class="eyebrow">Battlefield Tableau</p><h2>Eastern Marches · The Stormwright Cycle</h2></div>
-        <div class="map"><svg viewBox="0 0 1000 620" style="display:block;width:100%;height:min(52vh,640px)"><defs><radialGradient id="g" cx="50%" cy="50%" r="65%"><stop offset="0%" stop-color="#2f3430"/><stop offset="100%" stop-color="#0b0d0e"/></radialGradient></defs><rect width="1000" height="620" fill="url(#g)"/><line x1="190" y1="150" x2="520" y2="335" stroke="rgba(216,189,132,.35)" stroke-width="8" stroke-dasharray="18 14"/><line x1="190" y1="150" x2="355" y2="455" stroke="rgba(216,189,132,.35)" stroke-width="8" stroke-dasharray="18 14"/><line x1="520" y1="335" x2="745" y2="235" stroke="rgba(216,189,132,.35)" stroke-width="8" stroke-dasharray="18 14"/><ellipse cx="520" cy="335" rx="145" ry="80" fill="#d7d0c6" opacity=".18"/><circle cx="190" cy="150" r="30" fill="#d8bd84"/><rect x="490" y="305" width="60" height="60" rx="10" fill="#9d4f45"/><circle cx="355" cy="455" r="30" fill="#819fb6"/><rect x="715" y="205" width="60" height="60" rx="10" fill="#7f3333"/><circle cx="670" cy="505" r="30" fill="#7d9b75"/><text x="235" y="158" fill="#f2eadc">Ridge</text><text x="565" y="343" fill="#f2eadc">Caravan</text><text x="400" y="463" fill="#f2eadc">Civilians</text><text x="790" y="243" fill="#f2eadc">Captain</text><text x="715" y="513" fill="#f2eadc">Road</text><circle cx="190" cy="88" r="28" fill="#f2eadc" stroke="#d8bd84" stroke-width="5"/><text x="181" y="96" fill="#080b0d" font-weight="900">K</text></svg></div>
-        <div class="scenario"><p class="label">Scenario</p><p>The caravan burns below the ridge. Smoke folds into the rain and makes the road look smaller than it is. The raiders move badly except near their captain, where they move with shape.</p><p>Kael sees the whole field before he decides what any of it means.</p></div>
-        <div class="outcome"><p class="label">What Changed</p><div class="box">No action resolved yet.</div></div>
+
+      <section class="centre-table">
+        <p class="eyebrow">Battlefield Tableau</p>
+        <div class="storm-map-frame map-frame">
+          <svg id="worldMap" viewBox="0 0 1000 620" style="display:block; width:100%; height:min(52vh,640px);">
+            <defs>
+              <radialGradient id="mapGrad" cx="50%" cy="50%" r="65%">
+                <stop offset="0%" stop-color="#2f3430"/>
+                <stop offset="100%" stop-color="#0b0d0e"/>
+              </radialGradient>
+              <filter id="shadow">
+                <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.6"/>
+              </filter>
+            </defs>
+            <rect width="1000" height="620" fill="url(#mapGrad)"/>
+            <g id="routeLayer"></g>
+            <g id="locationLayer"></g>
+            <g id="tokenLayer"></g>
+          </svg>
+        </div>
+        <div class="scenario-panel" style="margin-top:14px;">
+          <p class="eyebrow">Scenario</p>
+          <div class="narration" id="narration"></div>
+        </div>
+        <div class="outcome-panel" style="margin-top:12px;">
+          <p class="outcome-label">What Changed</p>
+          <div id="outcomeText"></div>
+        </div>
       </section>
-      <aside class="panel">
-        <p class="eyebrow">Kael Vorn</p><h2>Iron Captain</h2><p>He is very good at the thing the world keeps asking him to be.</p><div class="state"><span>HP</span><strong>20/20</strong></div><div class="state"><span>Force</span><strong>Ready</strong></div><div class="state"><span>Restraint</span><strong>Thin</strong></div><div class="state"><span>Witness</span><strong>Partial</strong></div><div class="state"><span>Hollow</span><strong>Contained</strong></div><div class="state"><span>Reputation</span><strong>Useful name</strong></div><div class="section"><p class="eyebrow">The Account</p><div class="account">Campaign started: The Noise of Purpose.</div></div>
+
+      <aside class="character-panel">
+        <p class="eyebrow">Kael Vorn</p>
+        <div id="partyList"></div>
+        <div style="margin-top:18px; border-top:1px solid rgba(216,189,132,0.14); padding-top:14px;">
+          <p class="eyebrow">The Account</p>
+          <div id="journalList"></div>
+        </div>
       </aside>
+
     </section>
-  </main>
-  <script src="stable-play.js?v=1"></script>
+  </div>
+
+  <div class="character-drawer" id="characterDrawer" hidden>
+    <div class="drawer-card">
+      <button class="drawer-close" id="closeDrawerBtn">&#x2715;</button>
+      <h2 id="drawerName"></h2>
+      <p class="drawer-role" id="drawerRole"></p>
+      <p class="drawer-drive" id="drawerDrive"></p>
+      <div class="drawer-stats" id="drawerStats"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>

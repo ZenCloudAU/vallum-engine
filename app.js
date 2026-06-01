@@ -48,7 +48,9 @@ async function boot() {
     state = loadState() || createInitialState(campaign);
     document.body.classList.add("cover-open", "stormwright-theme");
     setText(dom.campaignTitle, campaign.title);
-    setText(dom.coverStatus, loadState() ? "Saved Stormwright session found on this browser." : "No saved Stormwright session found. Begin on the ridge.");
+    const hasSave = !!localStorage.getItem(STORAGE_KEY);
+    setText(dom.coverStatus, hasSave ? "Saved Stormwright session found on this browser." : "No saved Stormwright session found. Begin on the ridge.");
+    if (dom.continueBtn) dom.continueBtn.hidden = !hasSave;
     wireControls();
     render();
   } catch (error) {
@@ -196,7 +198,7 @@ function renderChoices(scene) {
   (scene.choices || []).forEach((choice, index) => {
     const button = document.createElement("button");
     button.className = "choice storm-choice";
-    button.innerHTML = `<span class="choice-title">${index + 1}. ${escapeHtml(choice.label)}</span>${choiceMeta(choice)}`;
+    button.innerHTML = `<span class="choice-title">${index + 1}. ${escapeHtml(choice.label)}</span>`;
     button.addEventListener("click", () => choose(choice));
     dom.choiceList.appendChild(button);
   });
@@ -413,7 +415,7 @@ function resolveRoll(roll) {
 
 function applyDelta(target, delta) {
   Object.entries(delta || {}).forEach(([key, value]) => {
-    target[key] = Math.max(0, (target[key] || 0) + value);
+    target[key] = Math.max(0, Math.min(10, (target[key] || 0) + value));
   });
 }
 
@@ -429,8 +431,8 @@ function advanceTime(phase) {
   state.time.phase = phase;
 }
 
-function statBonus(stat) {
-  return state.moralState?.[stat] || 1;
+function statBonus() {
+  return 0;
 }
 
 function openCharacterSheet(memberId) {
@@ -557,6 +559,10 @@ function svg(name, attrs = {}) {
   const el = document.createElementNS("http://www.w3.org/2000/svg", name);
   Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
   return el;
+}
+
+function setStatus(msg) {
+  setText(dom.saveStatus, msg);
 }
 
 function on(target, event, handler) {

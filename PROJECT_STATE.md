@@ -117,6 +117,19 @@ The layout and engagement correction pass addressed first-minute comprehension a
 - top controls reduced to compact save, new session, and `M` music toggle
 - compact music chrome override added in `layout-fix.js`
 
+## v0.3.3 delivered
+
+Engine reconnection and runtime stabilisation:
+
+- `setStatus()` defined in app.js — this was the root cause of all choice-click crashes
+- index.html rebuilt with all DOM IDs app.js requires
+- styles.css and ux.css linked in index.html — were absent, engine-rendered classes had no styles applied
+- stable-play.js demoted from active script tag; app.js now runs in production
+- `applyDelta` capped at 10 — moral and objective state can no longer accumulate unboundedly
+- `continueBtn` shows only when a saved session exists
+- "Interactive Recovery Build" labels removed from player-facing copy
+- `timeBox` moved to topbar chip; `ambienceBtn` gains tooltip
+
 ## v0.3.2 hotfix delivered
 
 The post-landing runtime crash was addressed with a stabilised runtime:
@@ -137,14 +150,14 @@ The product remains intentionally static for now. There is no build step, backen
 
 ## Next release
 
-The next pass should be v0.3.3 live tuning and readability:
+The next pass should be v0.4 — two decisions pending Phil's call before execution:
 
-- verify GitHub Pages runtime behaviour
-- tune layout proportions after live screen review
-- reduce any remaining visual clutter
-- refine Kael panel language
-- refine GM action copy and choice labels
-- tune aftermath report wording
+Both design decisions resolved in v0.3.3:
+
+- Choice pre-reveal removed. Deltas hidden before selection. Moral uncertainty preserved.
+- Stat system decoupled. d20 rolls are pure chance. Moral state shapes narrative, not dice math.
+
+Pending for v0.4: module authoring guide, additional decision scenes in Noise of Purpose (current module resolves in one branching moment — insufficient depth for sustained moral arc).
 
 ## Product control rule
 

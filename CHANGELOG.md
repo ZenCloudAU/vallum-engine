@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.3.3 - Engine reconnection and runtime stabilisation
+
+Status: committed on main.
+
+Fixed:
+
+- defined missing `setStatus()` function — root cause of choice-click crash in app.js
+- reconnected app.js to index.html (stable-play.js was emergency fallback; full engine now runs)
+- rebuilt index.html DOM with all required element IDs for app.js
+- linked styles.css and ux.css in index.html (were absent; engine-rendered classes had no styles)
+- added `applyDelta` ceiling of 10 — prevents unbounded moral/objective state accumulation
+- `continueBtn` now hidden when no save exists; shown when saved session detected
+- removed "Interactive Recovery Build" and "Interactive recovery mode" player-facing labels
+- moved `timeBox` to topbar as status chip
+- added `title="Toggle Music"` tooltip to ambience button
+
+Known constraints:
+
+- requires live browser review after GitHub Pages refresh
+- responsive layout falls back to one column under 1300px
+- choice impact hints removed — state deltas no longer shown before selection; moral uncertainty preserved
+- `statBonus()` decoupled from moralState — dice rolls are now pure d20; moral state affects narrative only
+
 ## v0.3.2 - Layout and engagement correction
 
 Status: committed on main.
