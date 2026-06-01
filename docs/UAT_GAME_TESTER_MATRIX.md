@@ -21,9 +21,10 @@ A release is not complete because code is committed. A release is complete only 
 
 | Release | UAT Target | Status |
 |---|---|---|
-| v0.3.4 UX Clarity Pass | Favicon visible. Decision cards distinct. State hierarchy readable. No console errors. | Pending founder live test |
-| v0.3.3 Engine Reconnection | Full engine (app.js) live. All DOM IDs present. setStatus() defined. No crash on choice click. | Static PASS — pending founder live test |
-| v0.3.2 Interactive Recovery | Superseded by v0.3.3. stable-play.js emergency path retired. | Closed |
+| v0.3.4 Loop and Session Complete | Play to aftermath terminal choice. Session complete screen renders. Full account visible. Portrait present. Forward hook conditional. Restart returns to play table. | Pending founder live test |
+| v0.3.4 (UX) | Favicon visible. Decision cards distinct. State hierarchy readable. | Pending founder live test |
+| v0.3.3 Engine Reconnection | Full engine live. No crash on choice click. Static 23/23 pass. | Pending founder live confirmation |
+| v0.3.2 Interactive Recovery | Superseded. stable-play.js retired. | Closed |
 
 ## Internal UAT matrix
 
@@ -49,6 +50,13 @@ A release is not complete because code is committed. A release is complete only 
 | UAT-018 | Decision Cards | Review available action buttons in GM panel. | Choice buttons feel like decisions, not navigation links. Left gold rail visible. Number muted. Label prominent. | Static PASS — border-left rail, muted number span, parchment title span | Requires founder visual and interaction review. |
 | UAT-019 | State Hierarchy | Review Kael panel state lines. | Descriptor label (e.g. "READY") reads before the number. Number is secondary. | Static PASS — em is gold weight-600; strong is muted 0.45 opacity | Requires founder visual review. |
 | UAT-020 | Outcome Grid | Make a choice and review What Changed. | Two outcome cells render cleanly without obvious empty third column. | Static PASS — auto-fit minmax(220px, 1fr) confirmed | Requires founder live test. |
+| UAT-021 | Outcome Scroll | Make a choice. | What Changed panel scrolls into view automatically. | Static PASS — scrollIntoView(smooth) in choose() | Requires founder live test. |
+| UAT-022 | Session Complete Trigger | Select "End the session at the edge of the hollow" in aftermath. | Session complete screen appears. Play table is replaced by full-screen overlay. | Static PASS — render() routes on sessionComplete flag | Requires founder live test. |
+| UAT-023 | Session Complete Account | View session complete screen. | All journal entries render in full (not capped at 6). | Static PASS — full state.journal rendered | Requires founder live test. |
+| UAT-024 | Session Complete Portrait | View session complete screen. | Narrative portrait sentence appears per state dimension (Force, Restraint, Witness, Hollow, Reputation, The Field). | Static PASS — buildPortraitLines() verified | Requires founder live test. |
+| UAT-025 | Forward Hook Conditional | Complete two sessions with different moral paths. | Forward hook text differs based on final Hollow vs Reputation vs Civilian state. | Static PASS — three conditional branches in buildForwardHook() | Requires founder two-run comparison. |
+| UAT-026 | Session Restart | Click restart on session complete screen. | Returns to play table in new session. Cover screen does not appear. State is fresh. | Static PASS — completeRestartBtn calls startNewSession() which hides sessionComplete | Requires founder live test. |
+| UAT-027 | Aftermath No Self-Loop | After selecting any non-terminal aftermath choice, confirm loop. | Aftermath scene re-renders with choices visible. Terminal choice still available. | Static PASS — render() only redirects on sessionComplete flag, not on currentScene | Requires founder live test. |
 
 ## Game tester matrix
 

@@ -33,7 +33,14 @@ const dom = {
   drawerName: $("drawerName"),
   drawerRole: $("drawerRole"),
   drawerStats: $("drawerStats"),
-  drawerDrive: $("drawerDrive")
+  drawerDrive: $("drawerDrive"),
+  sessionComplete: $("sessionComplete"),
+  completeTitle: $("completeTitle"),
+  completeEyebrow: $("completeEyebrow"),
+  completeJournal: $("completeJournal"),
+  completePortrait: $("completePortrait"),
+  completeHook: $("completeHook"),
+  completeRestartBtn: $("completeRestartBtn")
 };
 
 let campaign = null;
@@ -124,6 +131,7 @@ function wireControls() {
   on(dom.newGameBtn, "click", startNewSession);
   on(dom.ambienceBtn, "click", toggleAmbience);
   on(dom.closeDrawerBtn, "click", closeCharacterSheet);
+  on(dom.completeRestartBtn, "click", startNewSession);
   on(dom.characterDrawer, "click", (event) => {
     if (event.target === dom.characterDrawer) closeCharacterSheet();
   });
@@ -138,6 +146,7 @@ function closeCover() {
 function startNewSession() {
   localStorage.removeItem(STORAGE_KEY);
   state = createInitialState(campaign);
+  if (dom.sessionComplete) dom.sessionComplete.hidden = true;
   closeCover();
   setStatus("New session started.");
 }
@@ -153,6 +162,7 @@ function saveSilent() {
 
 function render() {
   try {
+    if (state.sessionComplete) { renderSessionComplete(); return; }
     const scene = getScene();
     setText(dom.regionTitle, `${campaign.region} · ${campaign.series || "Vallum"}`);
     setText(dom.timeBox, `Day ${state.time.day} · ${state.time.phase}`);
@@ -360,6 +370,76 @@ function buildAftermathReport() {
     </section>`;
 }
 
+function renderSessionComplete() {
+  if (!dom.sessionComplete) return;
+  dom.sessionComplete.hidden = false;
+  setText(dom.completeTitle, campaign.title);
+  setText(dom.completeEyebrow, `${campaign.region} · ${campaign.series || "Vallum"}`);
+  if (dom.completeJournal) {
+    dom.completeJournal.innerHTML = "";
+    state.journal.forEach((entry) => {
+      const div = document.createElement("div");
+      div.className = "complete-journal-entry";
+      div.textContent = entry;
+      dom.completeJournal.appendChild(div);
+    });
+  }
+  if (dom.completePortrait) {
+    dom.completePortrait.innerHTML = "";
+    buildPortraitLines().forEach(({ label, text }) => {
+      const div = document.createElement("div");
+      div.className = "complete-portrait-line";
+      div.innerHTML = `<em>${escapeHtml(label)}</em>${escapeHtml(text)}`;
+      dom.completePortrait.appendChild(div);
+    });
+  }
+  if (dom.completeHook) {
+    dom.completeHook.innerHTML = `<p class="outcome-label">What follows</p><p>${escapeHtml(buildForwardHook())}</p>`;
+  }
+}
+
+function buildPortraitLines() {
+  const m = state.moralState;
+  const o = state.objectives;
+  const lines = [];
+  if (m.force >= 7) lines.push({ label: "Force", text: "Force has become his first response. The decision arrives after the blade has already moved." });
+  else if (m.force >= 4) lines.push({ label: "Force", text: "Force is available and ready. He reaches for it easily and does not always notice the reaching." });
+  else lines.push({ label: "Force", text: "Force is held. He has not yet learned to trust it, or has decided not to." });
+  if (m.restraint >= 6) lines.push({ label: "Restraint", text: "He can hold back. That costs him. He is beginning to understand what the cost is." });
+  else if (m.restraint >= 3) lines.push({ label: "Restraint", text: "Restraint is possible. It is not yet instinct. He finds it when he looks for it." });
+  else lines.push({ label: "Restraint", text: "Restraint has not established itself. Purpose arrives before hesitation." });
+  if (m.witness >= 6) lines.push({ label: "Witness", text: "He sees clearly. That now includes himself, which is not comfortable." });
+  else if (m.witness >= 3) lines.push({ label: "Witness", text: "He is watching. He is not yet seeing everything he is part of." });
+  else lines.push({ label: "Witness", text: "He sees the field. He does not yet see what he is doing to it." });
+  if (m.hollow >= 7) lines.push({ label: "Hollow", text: "The hollow has opened. Something moves in the space where a more complete person used to stand." });
+  else if (m.hollow >= 4) lines.push({ label: "Hollow", text: "The hollow is present. He knows it is there and has not yet decided what to do with that knowledge." });
+  else lines.push({ label: "Hollow", text: "The hollow is contained. The cost has not yet accumulated past the threshold of comfort." });
+  if (m.reputation >= 6) lines.push({ label: "Reputation", text: "The Iron Captain has become something the world reaches for. He has not yet decided whether to let go of it." });
+  else if (m.reputation >= 3) lines.push({ label: "Reputation", text: "His name is useful. People know it. He has not decided what that means for what he is allowed to become." });
+  else lines.push({ label: "Reputation", text: "He is not yet legend. He is a man who did something on a road. There is still time to be something else." });
+  const civText = (o.civilians || 0) >= 7 ? "The civilians of the Eastern Road are alive." : (o.civilians || 0) >= 4 ? "Some of the civilians survived. The tally is incomplete." : "The civilian cost was severe.";
+  const threatText = (o.raiderThreat || 0) <= 3 ? "The raider threat has scattered." : (o.raiderThreat || 0) <= 6 ? "The raider threat remains unstable." : "The raider threat holds.";
+  lines.push({ label: "The Field", text: `${civText} ${threatText}` });
+  return lines;
+}
+
+function buildForwardHook() {
+  const hollow = state.moralState.hollow || 0;
+  const reputation = state.moralState.reputation || 0;
+  const restraint = state.moralState.restraint || 0;
+  const civilians = state.objectives.civilians || 0;
+  if (hollow >= 6) {
+    return "A rider reaches the garrison before Kael does. The letter bears no lord's seal — only a name, a village north of the march line, and a problem that requires exactly the kind of man the hollow has been making. He has not yet decided if that is a commission or a warning.";
+  }
+  if (reputation >= 5 && restraint <= 2) {
+    return "The Eastern Garrison has written to the Council. The Council has already written back. They want the Iron Captain for a commission in the interior lordships — something administrative, they say, involving a difficult man who does not respond to ordinary pressure. They mean Kael. He has not decided yet if he wants to be the pressure they mean.";
+  }
+  if (civilians >= 7 && restraint >= 4) {
+    return "The woman from under the wheel has sent a name to the garrison. She is asking for the captain who made a different choice. Somewhere in the interior, there is a community with a problem that does not require a blade — or would not, if the right person arrived first.";
+  }
+  return "The garrison wants a report. The Council of the Eastern Marches will want more than that. What happened on the road has already left the road — it lives now in accounts carried by men who were not there, and the shape of those accounts is not entirely accurate. Kael has not yet decided whether to correct them.";
+}
+
 function choose(choice) {
   try {
     const before = snapshotState();
@@ -382,6 +462,9 @@ function choose(choice) {
     saveSilent();
     setStatus("Autosaved.");
     render();
+    if (!state.sessionComplete && dom.outcomeText) {
+      dom.outcomeText.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
   } catch (error) {
     showFatalError(error);
   }

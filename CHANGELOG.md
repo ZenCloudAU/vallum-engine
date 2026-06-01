@@ -1,5 +1,38 @@
 # Changelog
 
+## v0.3.4 - Loop definition and session complete
+
+Status: committed on main.
+
+Added:
+
+- `docs/LOOP.md` — formal Vallum module loop definition (Establish → Decide → Peak → Land → Close)
+- session complete screen (`#sessionComplete`) — full-page overlay rendered when `state.sessionComplete === true`
+- `renderSessionComplete()` in app.js — populates complete screen with account, portrait, hook, restart button
+- `buildPortraitLines()` — generates narrative sentence per moral state dimension at session end
+- `buildForwardHook()` — builds a conditional forward hook based on final Hollow, Reputation, Restraint, and Civilians state
+- `completeRestartBtn` wired in `wireControls()` and `startNewSession()` hides the session complete screen on restart
+- `outcomeText.scrollIntoView()` in `choose()` — consequence scrolls into view immediately after each decision
+
+Changed:
+
+- `render()` now checks `state.sessionComplete` first — if true, routes to `renderSessionComplete()` and returns; aftermath no longer self-loops visually
+- `startNewSession()` hides `#sessionComplete` before calling `closeCover()`
+- `dom` object extended with `sessionComplete`, `completeTitle`, `completeEyebrow`, `completeJournal`, `completePortrait`, `completeHook`, `completeRestartBtn`
+
+Session complete screen content:
+
+- full journal (all entries, not capped at 6)
+- moral portrait: one narrative sentence per state dimension (Force, Restraint, Witness, Hollow, Reputation, The Field)
+- forward hook text: conditional on final moral state — different hook for high-Hollow, high-Reputation/low-Restraint, civilian-focused, or default
+- restart button returns player to play table (skips cover screen)
+
+Known constraints:
+
+- terminal choice detection still requires `"result": "The module ends..."` in campaign JSON — unchanged from v0.3.3
+- session complete screen is full-page overlay; play table remains underneath but is not accessible during it
+- forward hook references Module 2 locations and situations that do not yet exist as playable content
+
 ## v0.3.4 - UX clarity, palette, buttons, and favicon pass
 
 Status: committed on main.

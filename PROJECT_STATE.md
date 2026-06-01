@@ -119,6 +119,17 @@ The layout and engagement correction pass addressed first-minute comprehension a
 
 ## v0.3.4 delivered
 
+Loop definition and session complete:
+
+- `docs/LOOP.md` — Vallum module loop formalised as five stages: Establish → Decide → Peak → Land → Close
+- `renderSessionComplete()` replaces aftermath self-loop with a full session complete overlay
+- full account (all journal entries), moral portrait (narrative per state), conditional forward hook
+- `buildForwardHook()` produces different text for high-Hollow, high-Reputation/low-Restraint, civilian-focused, or default state
+- `outcomeText.scrollIntoView()` closes spatial gap between decision and consequence
+- `render()` routes to session complete screen when `state.sessionComplete === true`; aftermath no longer loops visually
+
+## v0.3.4 (prior) — UX clarity, palette, buttons, and favicon pass
+
 UX clarity, palette, buttons, and favicon pass:
 
 - `assets/favicon.svg` — original V-in-shield sigil, gold on void, SVG format
@@ -165,7 +176,7 @@ The product remains intentionally static for now. There is no build step, backen
 
 ## Next release
 
-The next pass should be v0.4 — two decisions pending Phil's call before execution:
+The next pass is v0.5 — two decisions pending Phil's call before execution:
 
 Both design decisions resolved in v0.3.3:
 
