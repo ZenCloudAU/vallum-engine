@@ -70,3 +70,46 @@
 .character:hover .character-name { color: var(--gold); }
 .route-active { stroke: rgba(216, 189, 132, 0.78) !important; stroke-width: 12 !important; }
 .party-token .token-core { opacity: 0.95; }
+
+.character-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  display: grid;
+  place-items: end;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.character-drawer[hidden] { display: none; }
+
+.drawer-card {
+  width: min(460px, calc(100vw - 32px));
+  border: 1px solid rgba(216, 189, 132, 0.28);
+  border-radius: 28px;
+  padding: 22px;
+  background: rgba(17, 22, 24, 0.98);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.drawer-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  font-size: 1.35rem;
+}
+
+.drawer-card h2 { margin: 0; font-size: 2rem; }
+.drawer-role { color: var(--gold); margin: 6px 0 16px; }
+.drawer-drive { color: var(--muted); line-height: 1.6; }
+.drawer-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.drawer-stat { border: 1px solid var(--line); border-radius: 14px; padding: 10px; background: rgba(255,255,255,0.035); }
+.drawer-stat strong { display: block; color: var(--text); }
+.drawer-stat span { color: var(--muted); font-size: 0.82rem; }
