@@ -11,10 +11,14 @@
   background: #080b0d;
 }
 
+.stormwright-theme .campaign-cover {
+  background: radial-gradient(circle at 48% 35%, rgba(216, 189, 132, 0.14), transparent 28rem), linear-gradient(180deg, #090c0d, #050607);
+}
+
 .campaign-cover[hidden] { display: none; }
 
 .cover-card {
-  width: min(760px, calc(100vw - 32px));
+  width: min(820px, calc(100vw - 32px));
   border: 1px solid rgba(216, 189, 132, 0.28);
   border-radius: 32px;
   padding: 48px;
@@ -48,6 +52,11 @@
   font-size: 0.88rem;
 }
 
+.storm-map-frame {
+  background: #0d0e0d;
+  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.55), 0 22px 70px rgba(0, 0, 0, 0.35);
+}
+
 .outcome-panel {
   margin-bottom: 14px;
   border: 1px solid rgba(216, 189, 132, 0.22);
@@ -70,6 +79,37 @@
 .character:hover .character-name { color: var(--gold); }
 .route-active { stroke: rgba(216, 189, 132, 0.78) !important; stroke-width: 12 !important; }
 .party-token .token-core { opacity: 0.95; }
+
+.storm-choice:hover {
+  background: rgba(216, 189, 132, 0.075);
+}
+
+.storm-state-panel {
+  margin-top: 14px;
+  border-top: 1px solid rgba(216, 189, 132, 0.14);
+  padding-top: 12px;
+}
+
+.objective-title {
+  margin-top: 14px;
+}
+
+.state-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-top: 1px solid rgba(216, 189, 132, 0.08);
+  color: var(--muted);
+}
+
+.state-line strong {
+  color: var(--text);
+}
+
+.state-line.objective strong {
+  color: var(--gold);
+}
 
 .character-drawer {
   position: fixed;
