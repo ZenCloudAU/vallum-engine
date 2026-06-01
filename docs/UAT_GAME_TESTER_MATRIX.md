@@ -21,7 +21,8 @@ A release is not complete because code is committed. A release is complete only 
 
 | Release | UAT Target | Status |
 |---|---|---|
-| v0.3.3 Engine Reconnection | Full engine (app.js) live. All DOM IDs present. setStatus() defined. No crash on choice click. | Pending founder live test |
+| v0.3.4 UX Clarity Pass | Favicon visible. Decision cards distinct. State hierarchy readable. No console errors. | Pending founder live test |
+| v0.3.3 Engine Reconnection | Full engine (app.js) live. All DOM IDs present. setStatus() defined. No crash on choice click. | Static PASS — pending founder live test |
 | v0.3.2 Interactive Recovery | Superseded by v0.3.3. stable-play.js emergency path retired. | Closed |
 
 ## Internal UAT matrix
@@ -43,6 +44,11 @@ A release is not complete because code is committed. A release is complete only 
 | UAT-013 | Comprehension | Read landing and first table screen. | Player understands who Kael is, where he is, what is happening, and what the decision pressure is. | Pending founder review | Cannot verify statically. Requires first-read test. |
 | UAT-014 | Stormwright Tone | Review copy and outcome language. | Tone feels restrained, severe, moral, and Stormwright-specific. | Pending founder review | Cannot verify statically. Requires world designer read. |
 | UAT-015 | Regression | Confirm no external runtime crash path remains. | Page continues to function after refresh and action click. | Static PASS — setStatus() defined; all DOM IDs present; no uncaught reference paths in choose() | Requires founder live regression run. |
+| UAT-016 | Favicon | Open site in browser tab. | Favicon appears as a small gold shield sigil in the browser tab. | Pending founder live test | SVG favicon; may not display in older browsers — acceptable. |
+| UAT-017 | Button Hierarchy | Review landing and play table buttons. | Primary button (Begin / Continue) is visually distinct from utility buttons (Save, New, M). | Static PASS — `.primary` has stronger gradient, border, weight vs `.compact-control` | Requires founder visual review. |
+| UAT-018 | Decision Cards | Review available action buttons in GM panel. | Choice buttons feel like decisions, not navigation links. Left gold rail visible. Number muted. Label prominent. | Static PASS — border-left rail, muted number span, parchment title span | Requires founder visual and interaction review. |
+| UAT-019 | State Hierarchy | Review Kael panel state lines. | Descriptor label (e.g. "READY") reads before the number. Number is secondary. | Static PASS — em is gold weight-600; strong is muted 0.45 opacity | Requires founder visual review. |
+| UAT-020 | Outcome Grid | Make a choice and review What Changed. | Two outcome cells render cleanly without obvious empty third column. | Static PASS — auto-fit minmax(220px, 1fr) confirmed | Requires founder live test. |
 
 ## Game tester matrix
 

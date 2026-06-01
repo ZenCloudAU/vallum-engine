@@ -1,5 +1,55 @@
 # Changelog
 
+## v0.3.4 - UX clarity, palette, buttons, and favicon pass
+
+Status: committed on main.
+
+Added:
+
+- `assets/favicon.svg` — original shield sigil (V mark, gold on void), SVG format
+- `<meta name="theme-color" content="#06080A">` in index.html
+- `<link rel="icon">` pointing to favicon in index.html
+
+Changed — palette:
+
+- formalised Stormwright token set: `--void`, `--iron`, `--ash`, `--parchment`, `--ink`, `--candle`, `--blood`, `--storm`, `--moss`, `--hollow`
+- all existing aliases (`--bg`, `--panel`, `--text`, `--muted`, `--gold`, `--red`, `--green`, `--blue`) preserved via `var()` references — no app.js or engine breakage
+
+Changed — buttons and choices:
+
+- `button:focus-visible` focus ring added globally for accessibility
+- `.primary` button: stronger gradient, heavier border, padded and weighted for cover screen
+- `.storm-choice` redesigned as decision card: left accent rail (3px `border-left`), subtle background, `translateX` hover shift, gold rail on hover/focus
+- `renderChoices()` now emits `<span class="choice-number">` and `<span class="choice-title">` separately for independent styling
+- choice number rendered muted gold; choice label remains parchment
+
+Changed — map frame:
+
+- `.storm-map-frame` given stronger inner shadow (140px), outer glow, darker background, explicit border and border-radius
+
+Changed — outcome panel:
+
+- `.outcome-grid` uses `repeat(auto-fit, minmax(220px, 1fr))` — no empty third column when only two items render
+- `.report-grid` uses `repeat(auto-fit, minmax(160px, 1fr))`
+- outcome panel has left accent rail (3px border-left) matching decision card language
+
+Changed — Kael state panel:
+
+- `state-line em` (descriptor label, e.g. "ready") is now visually prominent: gold tint, font-weight 600, uppercase
+- `state-line strong` (numeric value) demoted to secondary: muted opacity, lighter weight
+- objective state lines use storm blue for descriptor, candle for number — distinct from moral state
+
+Changed — header:
+
+- `.status-chip` visual weight reduced: smaller padding, lower opacity border, dimmer background
+- `.compact-control` quieter by default, colour brightens on hover
+
+Known constraints:
+
+- outcome panel scroll position unchanged — below-map location remains for v0.4 spatial review
+- character drawer style updated but not repositioned
+- responsive layout unchanged
+
 ## v0.3.3 - Engine reconnection and runtime stabilisation
 
 Status: committed on main.

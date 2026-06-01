@@ -117,6 +117,21 @@ The layout and engagement correction pass addressed first-minute comprehension a
 - top controls reduced to compact save, new session, and `M` music toggle
 - compact music chrome override added in `layout-fix.js`
 
+## v0.3.4 delivered
+
+UX clarity, palette, buttons, and favicon pass:
+
+- `assets/favicon.svg` — original V-in-shield sigil, gold on void, SVG format
+- formalised Stormwright palette tokens in styles.css; all engine aliases preserved
+- `.storm-choice` redesigned as decision card with left gold accent rail, hover shift, focus ring
+- `choice-number` split from `choice-title` in app.js for independent styling
+- `.outcome-grid` auto-fit — no empty third column
+- outcome panel has left accent rail matching decision card language
+- state-line hierarchy flipped: descriptor label (em) prominent, numeric value (strong) secondary
+- `.storm-map-frame` stronger inner shadow and outer glow
+- header chips reduced visual weight; primary button weight increased
+- global `button:focus-visible` focus ring for accessibility
+
 ## v0.3.3 delivered
 
 Engine reconnection and runtime stabilisation:

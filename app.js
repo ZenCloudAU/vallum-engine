@@ -198,7 +198,7 @@ function renderChoices(scene) {
   (scene.choices || []).forEach((choice, index) => {
     const button = document.createElement("button");
     button.className = "choice storm-choice";
-    button.innerHTML = `<span class="choice-title">${index + 1}. ${escapeHtml(choice.label)}</span>`;
+    button.innerHTML = `<span class="choice-number">${index + 1}.</span><span class="choice-title">${escapeHtml(choice.label)}</span>`;
     button.addEventListener("click", () => choose(choice));
     dom.choiceList.appendChild(button);
   });
