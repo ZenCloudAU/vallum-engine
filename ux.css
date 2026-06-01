@@ -18,13 +18,15 @@
 .campaign-cover[hidden] { display: none; }
 
 .cover-card {
-  width: min(820px, calc(100vw - 32px));
+  width: min(880px, calc(100vw - 32px));
   border: 1px solid rgba(216, 189, 132, 0.28);
   border-radius: 32px;
   padding: 48px;
   background: rgba(17, 22, 24, 0.98);
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.65);
 }
+
+.prologue-card strong { color: var(--text); }
 
 .cover-card h1 {
   margin: 0;
@@ -40,6 +42,38 @@
 
 .cover-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
 
+.play-shell {
+  width: min(1920px, calc(100vw - 28px));
+}
+
+.compact-topbar {
+  align-items: flex-end;
+  margin-bottom: 14px;
+}
+
+.compact-actions {
+  align-items: center;
+}
+
+.compact-control {
+  padding: 8px 12px;
+  font-size: 0.86rem;
+}
+
+.music-toggle {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.subtle-chip {
+  min-width: 54px;
+  justify-content: center;
+}
+
 .status-chip {
   display: inline-flex;
   align-items: center;
@@ -52,13 +86,85 @@
   font-size: 0.88rem;
 }
 
+.play-layout {
+  display: grid;
+  grid-template-columns: minmax(270px, 0.68fr) minmax(660px, 1.55fr) minmax(300px, 0.78fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.gm-panel,
+.character-panel,
+.centre-table {
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--panel);
+  box-shadow: 0 24px 80px var(--shadow);
+}
+
+.gm-panel,
+.character-panel {
+  padding: 18px;
+  min-height: calc(100vh - 132px);
+}
+
+.centre-table {
+  padding: 18px;
+}
+
+.stacked-header {
+  align-items: flex-start;
+}
+
+.gm-brief,
+.gm-actions,
+.scenario-panel,
+.kael-card,
+.account-card {
+  margin-top: 14px;
+}
+
+.gm-brief .mood-card {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  line-height: 1.5;
+}
+
 .storm-map-frame {
+  margin-top: 14px;
   background: #0d0e0d;
   box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.55), 0 22px 70px rgba(0, 0, 0, 0.35);
 }
 
+.centre-table #worldMap {
+  height: min(52vh, 640px);
+}
+
+.scenario-panel {
+  border: 1px solid rgba(216, 189, 132, 0.18);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.scenario-panel .narration {
+  margin: 0;
+  padding: 0;
+  min-height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: clamp(0.98rem, 1vw, 1.15rem);
+}
+
+.hidden-rolls {
+  display: none;
+}
+
 .outcome-panel {
-  margin-bottom: 14px;
+  margin-top: 12px;
+  margin-bottom: 0;
   border: 1px solid rgba(216, 189, 132, 0.22);
   border-radius: 18px;
   padding: 13px 15px;
@@ -68,7 +174,7 @@
 }
 
 .outcome-label {
-  margin: 0 0 5px;
+  margin: 0 0 7px;
   color: var(--gold);
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -117,6 +223,11 @@
 .character:hover .character-name { color: var(--gold); }
 .route-active { stroke: rgba(216, 189, 132, 0.78) !important; stroke-width: 12 !important; }
 .party-token .token-core { opacity: 0.95; }
+
+.storm-choice {
+  border-radius: 14px;
+  padding: 12px 13px;
+}
 
 .storm-choice:hover {
   background: rgba(216, 189, 132, 0.075);
@@ -212,6 +323,16 @@
 .drawer-stat { border: 1px solid var(--line); border-radius: 14px; padding: 10px; background: rgba(255,255,255,0.035); }
 .drawer-stat strong { display: block; color: var(--text); }
 .drawer-stat span { color: var(--muted); font-size: 0.82rem; }
+
+@media (max-width: 1300px) {
+  .play-layout {
+    grid-template-columns: 1fr;
+  }
+  .gm-panel,
+  .character-panel {
+    min-height: auto;
+  }
+}
 
 @media (max-width: 900px) {
   .outcome-grid,
