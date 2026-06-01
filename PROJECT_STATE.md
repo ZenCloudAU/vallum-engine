@@ -8,7 +8,7 @@ Live path:
 
 https://zencloudau.github.io/vallum-engine/
 
-Current release line: v0.3.1 Stormwright game-feel hardening.
+Current release line: v0.3.2 layout and engagement correction.
 
 ## Master world guide
 
@@ -101,6 +101,22 @@ The Stormwright game-feel hardening pass improved the module's play rhythm and c
 - local save key advanced to v0.3.1 with migration from v0.3
 - outcome and aftermath panels styled for readability
 
+## v0.3.2 delivered
+
+The layout and engagement correction pass addressed first-minute comprehension and screen hierarchy:
+
+- landing page rewritten as a proper Stormwright prologue
+- player role introduced as Kael Vorn before play begins
+- two-column layout replaced with three-zone play table
+- Game Master panel moved to the left
+- battlefield map moved to the centre and made primary
+- scenario narration moved below the map
+- outcome panel moved below the map as `What Changed`
+- Kael and The Account moved to the right
+- raw dice log hidden from normal view
+- top controls reduced to compact save, new session, and `M` music toggle
+- compact music chrome override added in `layout-fix.js`
+
 ## Deployment status
 
 The repository deploys from the main branch root through GitHub Pages.
@@ -109,13 +125,14 @@ The product remains intentionally static for now. There is no build step, backen
 
 ## Next release
 
-The next pass should be v0.3.2 live tuning:
+The next pass should be v0.3.3 live tuning and readability:
 
 - verify GitHub Pages runtime behaviour
-- tune dice targets and moral-state deltas
-- refine after-action report wording
-- improve battlefield spatial composition
-- decide whether the next module remains Chapter 1 expansion or moves to another Book I moment
+- tune layout proportions after live screen review
+- reduce any remaining visual clutter
+- refine Kael panel language
+- refine GM action copy and choice labels
+- tune aftermath report wording
 
 ## Product control rule
 
