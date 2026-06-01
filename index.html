@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vallum Engine</title>
+  <title>Vallum Engine · The Noise of Purpose</title>
   <meta name="description" content="Solo tabletop story engine for original campaign worlds." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="ux.css" />
@@ -11,9 +11,9 @@
 <body>
   <section id="campaignCover" class="campaign-cover" aria-label="Campaign launch screen">
     <div class="cover-card">
-      <p class="eyebrow">Vallum Engine v0.2</p>
-      <h1>The Western Road</h1>
-      <p class="cover-copy">A solo tabletop session for testing the core engine: map travel, GM narration, bounded choices, dice, party state, ambience, and local save.</p>
+      <p class="eyebrow">Vallum Engine v0.3 · Stormwright Cycle</p>
+      <h1>The Noise of Purpose</h1>
+      <p class="cover-copy">A Stormwright solo module: Kael Vorn on the ridge above a burning caravan, forced to choose between saving civilians, breaking the raider captain, commanding through reputation, or witnessing the field before becoming part of it.</p>
       <div class="cover-actions">
         <button id="continueBtn" class="primary">Continue session</button>
         <button id="startBtn" class="ghost">Start new session</button>
@@ -25,8 +25,8 @@
   <div class="app-shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">Vallum Engine · Solo Table</p>
-        <h1 id="campaignTitle">The Western Road</h1>
+        <p class="eyebrow">Vallum Engine · Stormwright Table</p>
+        <h1 id="campaignTitle">The Noise of Purpose</h1>
       </div>
       <div class="topbar-actions">
         <span id="saveStatus" class="status-chip">Local save ready</span>
@@ -41,18 +41,18 @@
       <section class="table-panel" aria-label="Game table">
         <div class="panel-header">
           <div>
-            <p class="eyebrow">Campaign Map</p>
+            <p class="eyebrow">Battlefield Tableau</p>
             <h2 id="regionTitle">Loading campaign</h2>
           </div>
-          <div id="timeBox" class="time-box">Day 1 · Dawn</div>
+          <div id="timeBox" class="time-box">Day 1 · Stormlight</div>
         </div>
 
-        <div class="map-frame">
+        <div class="map-frame storm-map-frame">
           <svg id="worldMap" viewBox="0 0 1000 620" role="img" aria-label="Top-down campaign map">
             <defs>
               <radialGradient id="mapGlow" cx="50%" cy="50%" r="65%">
-                <stop offset="0%" stop-color="#354230" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#111615" stop-opacity="1" />
+                <stop offset="0%" stop-color="#2f3430" stop-opacity="0.92" />
+                <stop offset="100%" stop-color="#0b0d0e" stop-opacity="1" />
               </radialGradient>
               <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
                 <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.35" />
@@ -70,8 +70,8 @@
         </div>
 
         <div class="table-footer">
-          <div id="sceneMood" class="mood-card">Mood: Loading</div>
-          <div id="diceLog" class="dice-log">Dice log ready.</div>
+          <div id="sceneMood" class="mood-card">Stakes: Loading</div>
+          <div id="diceLog" class="dice-log">Stormwright table ready.</div>
         </div>
       </section>
 
@@ -95,11 +95,11 @@
 
         <div class="lower-grid">
           <section class="party-card">
-            <div class="section-title">Party</div>
+            <div class="section-title">Kael and State</div>
             <div id="partyList"></div>
           </section>
           <section class="journal-card">
-            <div class="section-title">Journal</div>
+            <div class="section-title">Account</div>
             <div id="journalList"></div>
           </section>
         </div>
