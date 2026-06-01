@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.2.1 - Stormwright canon alignment
+
+Status: committed on main.
+
+Added:
+
+- accepted The Stormwright Cycle as the master world guide for Vallum's first original content line
+- created `docs/world/STORMWRIGHT_CANON.md`
+- created `docs/world/STORMWRIGHT_VALLUM_ADAPTATION.md`
+- selected first real module target: `The Noise of Purpose`
+- aligned product map to Stormwright mechanics and release direction
+- updated project state with canon and v0.3 implementation requirements
+
+Changed:
+
+- v0.3 is no longer a generic first story module; it is now the first Stormwright adaptation module
+- future mechanics now prioritise Force, Restraint, Witness, Hollow, and Reputation
+
 ## v0.2 - Product UX formalisation
 
 Status: in progress on main.
