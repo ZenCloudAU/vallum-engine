@@ -8,7 +8,7 @@ Live path:
 
 https://zencloudau.github.io/vallum-engine/
 
-Current release line: v0.3.2 layout and engagement correction.
+Current release line: v0.3.2 layout and engagement correction with runtime stabilisation.
 
 ## Master world guide
 
@@ -116,6 +116,18 @@ The layout and engagement correction pass addressed first-minute comprehension a
 - raw dice log hidden from normal view
 - top controls reduced to compact save, new session, and `M` music toggle
 - compact music chrome override added in `layout-fix.js`
+
+## v0.3.2 hotfix delivered
+
+The post-landing runtime crash was addressed with a stabilised runtime:
+
+- local save key advanced to `vallum.engine.session.noise-of-purpose.v0.3.2`
+- incompatible older local state no longer loads into the new layout
+- runtime now guards missing DOM elements instead of hard-crashing
+- campaign fetch uses `no-store` to reduce stale file risk
+- raw roll output removed from the visible outcome model
+- visible recovery path added if the table is interrupted
+- music toggle handling moved into the main runtime as compact On/Off state
 
 ## Deployment status
 
