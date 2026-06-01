@@ -8,7 +8,7 @@ Live path:
 
 https://zencloudau.github.io/vallum-engine/
 
-Current release line: v0.3 Stormwright playable module execution.
+Current release line: v0.3.1 Stormwright game-feel hardening.
 
 ## Master world guide
 
@@ -87,6 +87,20 @@ The first Stormwright playable module execution began:
 - storm ambience mode added
 - theme layer sharpened for Stormwright tone
 
+## v0.3.1 delivered
+
+The Stormwright game-feel hardening pass improved the module's play rhythm and consequence clarity:
+
+- structured outcome display: roll result, immediate consequence, state change
+- choice impact hints added to each action
+- moral state labels added for Force, Restraint, Witness, Hollow, and Reputation
+- objective labels added for civilians, raider threat, and captain pressure
+- battlefield zones added behind ridge, civilians, and captain areas
+- aftermath report added for the aftermath scene
+- session-complete flag added when the module-ending choice is selected
+- local save key advanced to v0.3.1 with migration from v0.3
+- outcome and aftermath panels styled for readability
+
 ## Deployment status
 
 The repository deploys from the main branch root through GitHub Pages.
@@ -95,14 +109,13 @@ The product remains intentionally static for now. There is no build step, backen
 
 ## Next release
 
-The next pass should harden v0.3 after live testing:
+The next pass should be v0.3.2 live tuning:
 
-- verify the module loads on GitHub Pages
-- tune choice outcomes and stat targets
-- improve battlefield visual composition
-- add an explicit session-complete screen or state
-- add source-canon notes visible in documentation, not runtime
-- consider a compact visual legend for moral and objective state
+- verify GitHub Pages runtime behaviour
+- tune dice targets and moral-state deltas
+- refine after-action report wording
+- improve battlefield spatial composition
+- decide whether the next module remains Chapter 1 expansion or moves to another Book I moment
 
 ## Product control rule
 
