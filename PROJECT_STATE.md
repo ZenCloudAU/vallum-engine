@@ -1,10 +1,18 @@
 # Vallum Engine Project State
 
-## Release v0.1 status
+## Current status
 
-Initial playable static vertical slice has been seeded into the repository.
+Vallum Engine is live as a GitHub Pages static app.
 
-Implemented:
+Live path:
+
+https://zencloudau.github.io/vallum-engine/
+
+Current release line: v0.2 product UX formalisation.
+
+## v0.1 delivered
+
+The first release proved the playable solo tabletop loop:
 
 - static application shell
 - split-screen tabletop layout
@@ -22,16 +30,38 @@ Implemented:
 - generated ambience using Web Audio API
 - no external dependency or build step required
 
+## v0.2 delivered
+
+The second release formalised the product UX and documentation baseline:
+
+- campaign cover screen
+- continue session and start session flow
+- campaign title chrome
+- visible save state chip
+- visible ambience state chip
+- latest outcome panel
+- active route highlighting
+- party-cluster token display
+- clickable party members
+- character sheet drawer
+- v0.2 UX stylesheet layer
+- product map documentation
+- release guide documentation
+- changelog
+- refreshed README
+
 ## Deployment status
 
-The repository is ready for GitHub Pages deployment from the main branch root.
+The repository deploys from the main branch root through GitHub Pages.
 
-If the live URL is not active yet, use repository settings and enable Pages from the main branch root.
-
-Expected live path:
-
-https://zencloudau.github.io/vallum-engine/
+The product remains intentionally static for now. There is no build step, backend, database, login, multiplayer layer, or external asset dependency.
 
 ## Next release
 
-v0.2 should move from sample content to Phil's first real story module. The next module should be one short playable arc: one starting location, one route, one threat, one encounter, one climax, and one return state.
+v0.3 should replace the sample content with the first short playable story module from Phil's own writing.
+
+The next module should contain one starting location, one route, one primary threat, one investigation or social scene, one encounter, one climax, and one return or session-end state.
+
+## Product control rule
+
+Every future release must update `CHANGELOG.md`, `PROJECT_STATE.md`, and any roadmap or guide document affected by the change.
