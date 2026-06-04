@@ -72,7 +72,7 @@ async function loadCampaign() {
 }
 
 function createInitialState(module) {
-  return {
+  const initialState = {
     campaignId: module.id,
     currentScene: module.startingScene,
     previousScene: null,
@@ -88,6 +88,8 @@ function createInitialState(module) {
     completedChoices: [],
     sessionComplete: false
   };
+  console.log("Initialized game state:", initialState);
+  return initialState;
 }
 
 function loadState() {
