@@ -1,8 +1,8 @@
 # Vallum Engine
 
-Solo tabletop story engine for turning original worlds, characters, and campaign notes into playable browser sessions.
+Solo-first digital tabletop story engine for turning original worlds, characters and chapters into playable browser sessions.
 
-Vallum Engine is a solo-first browser tabletop product. It lets a campaign module render as a playable session with a map, party, narration, choices, dice, consequences, character state, ambience, and local save.
+Vallum is designed to recreate the emotional structure of sitting around a kitchen table: a central VTT board, a Game Master behind a screen, character tokens and sheets, hidden resolution, an in-world Account and consequences that persist.
 
 Live app:
 
@@ -10,67 +10,104 @@ https://zencloudau.github.io/vallum-engine/
 
 ## Product intent
 
-Vallum is not a D&D clone, Forgotten Realms adaptation, Warhammer derivative, or Final Fantasy adaptation. It is an original solo tabletop engine designed to run Phil's own worlds and stories.
+Vallum is an original tabletop engine for Phil's own worlds and stories. It is not a commercial-setting adaptation, a full 3D CRPG or an unrestricted generative chat experience.
 
-The engine is separated from the campaign content. Stories become modules. The runtime reads those modules and presents them as playable tabletop sessions.
+The engine is separated from campaign content. Stories become modules. Boards, tokens, state and the Account make those modules playable.
 
-## Current release
+The first canonical world line is The Stormwright Cycle. The first module is `The Noise of Purpose`, centred on Kael Vorn at the ridge above the burning caravan.
 
-`v0.2` formalises the product UX and documentation baseline.
+## Experience promise
 
-Current capabilities:
+A first-time player should:
 
-- campaign cover screen
-- continue session and start new session flow
-- static campaign module loading
-- top-down SVG route map
-- party-cluster token display
-- GM narration panel
-- bounded choices
-- dice checks
-- latest outcome panel
-- simple combat resolver
-- party HP tracking
-- clickable character sheets
-- journal tracking
-- generated ambience
-- visible save and ambience state
-- local browser save state
+1. understand the world and Kael before the first choice;
+2. begin the journey and sit down at a virtual table;
+3. see the board, Game Master and character position clearly;
+4. choose under uncertainty rather than optimise visible moral deltas;
+5. see consequences alter the board, character and Account;
+6. complete the session with a final portrait and forward hook.
 
-## Deployment
+## Current release state
 
-The app deploys from the `main` branch root through GitHub Pages.
+The current v0.3.x line has restored the full runtime, formalised the module loop and added a session-complete state. Static verification has passed; founder live UAT remains the release gate for visual load, comprehension and Stormwright tone.
 
-There is no build step, package manager, backend, database, or external asset dependency in the current release line.
+Current capabilities include:
+
+- Stormwright landing and campaign module;
+- Game Master narration and bounded decision cards;
+- hidden resolution with post-choice consequence;
+- moral state: Force, Restraint, Witness, Hollow and Reputation;
+- objective and field state;
+- Kael character panel and drawer;
+- Account/journal;
+- save, continue and new session;
+- session-complete overlay with final portrait and forward hook;
+- ambience;
+- internal UAT and release signoff standards.
+
+The current symbolic board remains an engine proof. The next design phase introduces the table surface, VTT board contract and dimensional hero token.
+
+## Tabletop design authority
+
+- `docs/TABLETOP_EXPERIENCE_BLUEPRINT.md` — player experience and kitchen-table metaphor
+- `docs/PRODUCT_ROADMAP_MVP_MLP.md` — MVP and MLP definition and release cycles
+- `docs/DESIGN_WORKSHOP.md` — full design workshop plan and required decisions
+- `docs/VTT_BOARD_AND_TOKEN_STANDARD.md` — reusable board, zone, overlay and token contract
+- `docs/LOOP.md` — module structure: Establish → Decide → Peak → Land → Close
+- `docs/world/STORMWRIGHT_CANON.md` — game-design canon extraction
+- `docs/world/STORMWRIGHT_VALLUM_ADAPTATION.md` — adaptation boundary and first module
+
+## MVP
+
+The MVP is one complete and stable Stormwright tabletop session with:
+
+- world landing;
+- sit-down-at-the-table transition;
+- VTT board and Kael token;
+- Game Master information boundary;
+- complete module loop;
+- Account and session complete;
+- save and continue;
+- internal UAT and founder signoff.
+
+## MLP
+
+The Minimum Lovable Product is a three-module Stormwright arc with:
+
+- cross-module state;
+- meaningful irreversible consequence;
+- multiple VTT boards;
+- world response;
+- at least two bounded AI-controlled companions;
+- persistent party presence;
+- a repeatable story-to-module authoring contract;
+- a concrete reason to return.
+
+See `docs/PRODUCT_ROADMAP_MVP_MLP.md` for release sequencing.
 
 ## Architecture
 
-The current version uses plain HTML, CSS, and JavaScript to avoid dependency and deployment friction. React/TypeScript can be introduced later if the product needs it, but the priority is proving the playable solo tabletop loop first.
+The current product uses plain HTML, CSS and JavaScript, deployed from the `main` branch through GitHub Pages.
+
+There is currently no package manager, backend, database, login or multiplayer service. The next board and token layer should preserve the static hosting model and retain coded fallbacks.
 
 Key files:
 
-- `index.html` — application shell and campaign cover
-- `styles.css` — base table, map, panel, character, and responsive layout
-- `ux.css` — v0.2 product UX layer
-- `app.js` — runtime engine, dice, choices, state, ambience, save, character sheet drawer
-- `data/campaigns/western-road.json` — first sample campaign module
-- `docs/PRODUCT_MAP.md` — product direction and release map
-- `docs/RELEASE_GUIDE.md` — release operating guide
+- `index.html` — application shell and landing
+- `styles.css` and `ux.css` — design system and tabletop layout
+- `app.js` — runtime engine, choices, state, ambience, save and session complete
+- `data/campaigns/noise-of-purpose.json` — first Stormwright module
+- `PROJECT_STATE.md` — current delivery state
 - `CHANGELOG.md` — release history
-- `PROJECT_STATE.md` — current project status
+- `docs/UAT_GAME_TESTER_MATRIX.md` — internal acceptance tests
+- `docs/RELEASE_SIGNOFF_STANDARD.md` — final release control
 
-## Roadmap
+## Design rules
 
-The roadmap is solo-first but multiplayer-capable:
-
-1. v0.1: playable static solo vertical slice
-2. v0.2: product UX formalisation and documentation baseline
-3. v0.3: first real story module based on Phil's own writing
-4. v0.4: module authoring guide
-5. v0.5: durable rules, inventory, wounds, and progression
-6. v0.6: lore bible and AI-assisted module compiler workflow
-7. future: shared campaign rooms, remote session state, and human-controlled party members
-
-## Design rule
-
-The engine should remain stable. AI belongs first in authoring, lore extraction, and module compilation, not inside unbounded runtime improvisation.
+- The table is the product metaphor.
+- The board is the centre of play.
+- The Game Master hides machinery and reveals consequences.
+- Moral state shapes narrative and future possibility, not direct dice advantage.
+- Pre-choice state deltas remain hidden.
+- AI belongs first in authoring and later in bounded companion behaviour, not unbounded runtime improvisation.
+- A release is not final until internal UAT and founder live signoff pass.
