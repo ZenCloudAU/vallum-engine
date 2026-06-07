@@ -8,183 +8,177 @@ Live path:
 
 https://zencloudau.github.io/vallum-engine/
 
-Current release line: v0.3.2 layout and engagement correction with runtime stabilisation.
+Current release posture: **v0.3.4 release candidate — static verification passed; founder live UAT remains required for visual load, comprehension and Stormwright tone.**
+
+The v0.3.x line restored the full runtime, formalised the module loop, removed pre-choice moral deltas, decoupled moral state from dice bonuses, added session complete and introduced UX identity improvements.
+
+## Product direction
+
+Vallum is now governed by the digital kitchen-table metaphor:
+
+- the player enters the Stormwright world before the first decision;
+- the player is invited to sit down at a virtual table;
+- a VTT board becomes the centre of play;
+- the Game Master sits behind a screen and hides resolution machinery;
+- Kael is represented by a dimensional tabletop token;
+- character state and the Account sit beside the board;
+- future AI companions create party presence;
+- consequences alter board, character, Account and future possibility.
+
+Canonical design documents:
+
+- `docs/TABLETOP_EXPERIENCE_BLUEPRINT.md`;
+- `docs/PRODUCT_ROADMAP_MVP_MLP.md`;
+- `docs/DESIGN_WORKSHOP.md`;
+- `docs/VTT_BOARD_AND_TOKEN_STANDARD.md`;
+- `docs/LOOP.md`.
 
 ## Master world guide
 
-The Stormwright Cycle series bible is the master canon source for Vallum Engine's first original world line.
+The Stormwright Cycle series bible is the master canon source for Vallum's first original world line.
 
-The canon direction is documented in:
+Canon and adaptation:
 
-- `docs/world/STORMWRIGHT_CANON.md`
-- `docs/world/STORMWRIGHT_VALLUM_ADAPTATION.md`
+- `docs/world/STORMWRIGHT_CANON.md`;
+- `docs/world/STORMWRIGHT_VALLUM_ADAPTATION.md`.
 
-The first real module is `The Noise of Purpose`, adapted from Book I Chapter 1: the ridge above the burning caravan, the civilian-versus-captain choice, the surge, and the aftermath.
+The first module is `The Noise of Purpose`, adapted from Book I Chapter 1: the ridge, burning caravan, civilians, raider captain, surge and aftermath.
 
-## v0.1 delivered
+## Current implementation
 
-The first release proved the playable solo tabletop loop:
+The repository currently provides:
 
-- static application shell
-- split-screen tabletop layout
-- campaign module format
-- sample campaign: The Western Road
-- top-down route map rendered in SVG
-- party token rendering
-- bounded scene choices
-- GM narration panel
-- dice checks
-- simple combat resolver
-- party HP tracking
-- journal tracking
-- local browser save state
-- generated ambience using Web Audio API
-- no external dependency or build step required
+- GitHub Pages static deployment;
+- Stormwright landing and module loading;
+- Game Master narration;
+- bounded decision cards;
+- hidden d20 resolution;
+- post-choice consequence display;
+- moral state: Force, Restraint, Witness, Hollow and Reputation;
+- objective and field state;
+- Kael character panel and drawer;
+- Account/journal;
+- local save, continue and new session;
+- ambience;
+- session-complete overlay;
+- final moral portrait and forward hook;
+- internal UAT and release signoff standards;
+- favicon and Stormwright palette.
 
-## v0.2 delivered
+The current board remains a symbolic coded map. It proves state and movement but does not yet meet the accepted tabletop immersion target.
 
-The second release formalised the product UX and documentation baseline:
+## Release history summary
 
-- campaign cover screen
-- continue session and start session flow
-- campaign title chrome
-- visible save state chip
-- visible ambience state chip
-- latest outcome panel
-- active route highlighting
-- party-cluster token display
-- clickable party members
-- character sheet drawer
-- v0.2 UX stylesheet layer
-- product map documentation
-- release guide documentation
-- changelog
-- refreshed README
+### v0.1 — engine proof
 
-## v0.2.1 delivered
+Delivered static shell, sample campaign, SVG map, choices, dice, combat, HP, journal, ambience and local save.
 
-The Stormwright canon alignment release formalised the first content direction:
+### v0.2 — product UX baseline
 
-- Stormwright Cycle accepted as master world guide
-- Stormwright canon guide created
-- Stormwright Vallum adaptation plan created
-- v0.3 module target selected
-- product map updated around Stormwright mechanics and roadmap
+Delivered campaign cover, continue/new flow, title chrome, outcome, route highlighting, clickable character sheet and product documentation.
 
-## v0.3 delivered
+### v0.2.1 — Stormwright canon alignment
 
-The first Stormwright playable module execution began:
+Accepted the Stormwright Cycle as the first world authority and defined `The Noise of Purpose`.
 
-- new campaign module: `data/campaigns/noise-of-purpose.json`
-- runtime now loads `The Noise of Purpose` instead of the sample campaign
-- shell copy updated for Stormwright and Kael Vorn
-- battlefield tableau replaces the travel-road framing
-- single-character Kael module support added
-- objective state added for civilians, raider threat, and captain pressure
-- Stormwright moral state added: Force, Restraint, Witness, Hollow, Reputation
-- Stormwright stat rolls wired into the dice engine
-- map marker palette updated for ridge, fire, civilians, captain, and road
-- storm ambience mode added
-- theme layer sharpened for Stormwright tone
+### v0.3 — Stormwright module execution
 
-## v0.3.1 delivered
+Added Kael, battlefield tableau, objective state, moral state and Stormwright tone.
 
-The Stormwright game-feel hardening pass improved the module's play rhythm and consequence clarity:
+### v0.3.1 — game-feel hardening
 
-- structured outcome display: roll result, immediate consequence, state change
-- choice impact hints added to each action
-- moral state labels added for Force, Restraint, Witness, Hollow, and Reputation
-- objective labels added for civilians, raider threat, and captain pressure
-- battlefield zones added behind ridge, civilians, and captain areas
-- aftermath report added for the aftermath scene
-- session-complete flag added when the module-ending choice is selected
-- local save key advanced to v0.3.1 with migration from v0.3
-- outcome and aftermath panels styled for readability
+Added structured consequence, state labels, battlefield zones and aftermath reporting.
 
-## v0.3.2 delivered
+### v0.3.2 — layout and engagement correction
 
-The layout and engagement correction pass addressed first-minute comprehension and screen hierarchy:
+Moved Game Master left, map centre, Kael/Account right, narration below board and raw dice behind the screen.
 
-- landing page rewritten as a proper Stormwright prologue
-- player role introduced as Kael Vorn before play begins
-- two-column layout replaced with three-zone play table
-- Game Master panel moved to the left
-- battlefield map moved to the centre and made primary
-- scenario narration moved below the map
-- outcome panel moved below the map as `What Changed`
-- Kael and The Account moved to the right
-- raw dice log hidden from normal view
-- top controls reduced to compact save, new session, and `M` music toggle
-- compact music chrome override added in `layout-fix.js`
+### v0.3.3 — engine reconnection
 
-## v0.3.4 delivered
+Resolved the runtime/DOM disconnect, defined missing `setStatus()`, restored the full engine, capped state and removed recovery labels.
 
-Loop definition and session complete:
+### v0.3.4 — loop and identity candidate
 
-- `docs/LOOP.md` — Vallum module loop formalised as five stages: Establish → Decide → Peak → Land → Close
-- `renderSessionComplete()` replaces aftermath self-loop with a full session complete overlay
-- full account (all journal entries), moral portrait (narrative per state), conditional forward hook
-- `buildForwardHook()` produces different text for high-Hollow, high-Reputation/low-Restraint, civilian-focused, or default state
-- `outcomeText.scrollIntoView()` closes spatial gap between decision and consequence
-- `render()` routes to session complete screen when `state.sessionComplete === true`; aftermath no longer loops visually
+Formalised `ESTABLISH → DECIDE → PEAK → LAND → CLOSE`, added session complete, full Account, moral portrait, conditional forward hook, palette, favicon and decision-card styling.
 
-## v0.3.4 (prior) — UX clarity, palette, buttons, and favicon pass
+## Accepted system decisions
 
-UX clarity, palette, buttons, and favicon pass:
+- pre-choice state deltas remain hidden;
+- moral state does not provide direct dice bonuses;
+- values are bounded between 0 and 10;
+- state should later open, close or reframe narrative choices;
+- Hollow is a cost, not a reward;
+- AI remains outside unbounded runtime improvisation;
+- critical UAT failures block feature work;
+- live wiring and user-path evidence determine release truth.
 
-- `assets/favicon.svg` — original V-in-shield sigil, gold on void, SVG format
-- formalised Stormwright palette tokens in styles.css; all engine aliases preserved
-- `.storm-choice` redesigned as decision card with left gold accent rail, hover shift, focus ring
-- `choice-number` split from `choice-title` in app.js for independent styling
-- `.outcome-grid` auto-fit — no empty third column
-- outcome panel has left accent rail matching decision card language
-- state-line hierarchy flipped: descriptor label (em) prominent, numeric value (strong) secondary
-- `.storm-map-frame` stronger inner shadow and outer glow
-- header chips reduced visual weight; primary button weight increased
-- global `button:focus-visible` focus ring for accessibility
+## MVP
 
-## v0.3.3 delivered
+The MVP is one complete, stable Stormwright tabletop session with:
 
-Engine reconnection and runtime stabilisation:
+- world landing;
+- sit-down-at-the-table transition;
+- VTT board and Kael token;
+- Game Master information boundary;
+- complete module loop;
+- Account and session complete;
+- save and continue;
+- internal UAT and founder signoff.
 
-- `setStatus()` defined in app.js — this was the root cause of all choice-click crashes
-- index.html rebuilt with all DOM IDs app.js requires
-- styles.css and ux.css linked in index.html — were absent, engine-rendered classes had no styles applied
-- stable-play.js demoted from active script tag; app.js now runs in production
-- `applyDelta` capped at 10 — moral and objective state can no longer accumulate unboundedly
-- `continueBtn` shows only when a saved session exists
-- "Interactive Recovery Build" labels removed from player-facing copy
-- `timeBox` moved to topbar chip; `ambienceBtn` gains tooltip
+## MLP
 
-## v0.3.2 hotfix delivered
+The MLP is a three-module Stormwright arc with:
 
-The post-landing runtime crash was addressed with a stabilised runtime:
-
-- local save key advanced to `vallum.engine.session.noise-of-purpose.v0.3.2`
-- incompatible older local state no longer loads into the new layout
-- runtime now guards missing DOM elements instead of hard-crashing
-- campaign fetch uses `no-store` to reduce stale file risk
-- raw roll output removed from the visible outcome model
-- visible recovery path added if the table is interrupted
-- music toggle handling moved into the main runtime as compact On/Off state
-
-## Deployment status
-
-The repository deploys from the main branch root through GitHub Pages.
-
-The product remains intentionally static for now. There is no build step, backend, database, login, multiplayer layer, or external asset dependency.
+- cross-module state;
+- meaningful irreversible consequence;
+- multiple VTT boards;
+- world response;
+- at least two bounded AI companions;
+- persistent party presence;
+- repeatable story-to-module authoring.
 
 ## Next release
 
-The next pass is v0.5 — two decisions pending Phil's call before execution:
+### v0.4 — Tabletop Entry and Orientation
 
-Both design decisions resolved in v0.3.3:
+Required outcome:
 
-- Choice pre-reveal removed. Deltas hidden before selection. Moral uncertainty preserved.
-- Stat system decoupled. d20 rolls are pure chance. Moral state shapes narrative, not dice math.
+- landing page introduces the Stormwright world and Kael clearly;
+- transition explicitly brings the player to the table;
+- Game Master, board and character positions are staged coherently;
+- first-time player understands identity, place, pressure and role before the first choice;
+- no new mechanical expansion beyond what supports the opening experience;
+- release passes internal UAT and founder live signoff.
 
-Pending for v0.4: module authoring guide, additional decision scenes in Noise of Purpose (current module resolves in one branching moment — insufficient depth for sustained moral arc).
+### Subsequent releases
+
+- v0.5 — VTT Board Foundation;
+- v0.6 — Board Consequence;
+- v0.7 — Module One Completion;
+- v0.8 — Persistence and Resume hardening;
+- v0.9 — MVP UAT candidate;
+- v1.0 — MVP release;
+- v2.0 — Minimum Lovable Product three-module arc.
+
+See `docs/PRODUCT_ROADMAP_MVP_MLP.md` for the complete release sequence.
+
+## Current decisions required
+
+- complete the full design workshop;
+- approve landing-page world depth and copy;
+- approve sit-down transition storyboard;
+- approve the first VTT board specification;
+- approve Kael token design;
+- expand Module One to the standard loop depth;
+- reconcile implementation tags and release documentation before the next public claim;
+- define state-gate behaviour and future companion architecture.
+
+## Deployment
+
+The product deploys from the `main` branch root through GitHub Pages.
+
+Current architecture remains plain HTML, CSS and JavaScript with local browser persistence and no backend, database, login or multiplayer service.
 
 ## Product control rule
 
-Every future release must update `CHANGELOG.md`, `PROJECT_STATE.md`, and any roadmap or guide document affected by the change.
+Every future release must update `CHANGELOG.md`, `PROJECT_STATE.md` and affected roadmap or guide documents. A release is not final until internal UAT and founder live signoff are complete.
