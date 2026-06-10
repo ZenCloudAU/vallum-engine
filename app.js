@@ -1,6 +1,25 @@
 const CAMPAIGN_PATH = "data/campaigns/noise-of-purpose.json";
 const STORAGE_KEY = "vallum.engine.session.noise-of-purpose.v0.3.2";
 
+// ── Token visual identity ─────────────────────────────────────────
+
+const ROLE_PALETTE = {
+  "Iron Captain": { body: "#1a1c1e", rim: "#d8bd84", hi: "#eedfa0" },
+  "Wardblade":    { body: "#0d1822", rim: "#4a8aab", hi: "#6aaacb" },
+  "Ash Scholar":  { body: "#15101e", rim: "#8a7aae", hi: "#aa9ace" },
+  "Road Warden":  { body: "#1a1408", rim: "#8a7050", hi: "#aa9070" },
+  "Oath Singer":  { body: "#160c1c", rim: "#8a4aae", hi: "#aa6ace" }
+};
+
+const KIND_PALETTE = {
+  threat:     { body: "#2a0a0a", rim: "#8b2a2a", hi: "#b34a4a", r: 20 },
+  fire:       { body: "#2a1000", rim: "#b35b4f", hi: "#c37b6f", r: 14 },
+  objective:  { body: "#0a1820", rim: "#5a8fae", hi: "#7aafce", r: 14 },
+  settlement: { body: "#1a1a12", rim: "#9a9a70", hi: "#baba90", r: 16 },
+  dungeon:    { body: "#0a0a16", rim: "#6a6a9a", hi: "#8a8aba", r: 16 },
+  site:       { body: "#101a10", rim: "#6a9a6a", hi: "#8aba8a", r: 14 }
+};
+
 const $ = (id) => document.getElementById(id);
 
 const dom = {
@@ -299,7 +318,7 @@ function renderMap(scene) {
     }));
   });
   (campaign.locations || []).forEach((location) => renderLocation(location, scene.location));
-  renderKaelToken(getLocation(scene.location));
+  renderAllTokens(scene);
 }
 
 function renderBattlefieldTexture() {
@@ -330,14 +349,132 @@ function renderLocation(location, currentId) {
   dom.locationLayer.appendChild(group);
 }
 
-function renderKaelToken(current) {
-  const token = svg("g", { class: "party-token" });
-  const circle = svg("circle", { class: "token-core", cx: current.x, cy: current.y - 62, r: 28, fill: "#f2eadc", stroke: "#d8bd84", "stroke-width": 5, filter: "url(#shadow)" });
-  const text = svg("text", { x: current.x, y: current.y - 62 });
-  text.textContent = "K";
-  token.appendChild(circle);
-  token.appendChild(text);
-  dom.tokenLayer.appendChild(token);
+// ── Token helpers ─────────────────────────────────────────────────
+
+function tokenInitial(name) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+function clusterOffsets(n) {
+  return ([
+    [[0, 0]],
+    [[-26, 8], [26, 8]],
+    [[-26, 10], [26, 10], [0, -22]],
+    [[-24, -16], [24, -16], [-24, 18], [24, 18]]
+  ])[Math.min(n - 1, 3)];
+}
+
+function makeToken({ cx, cy, r, body, hi, rim, initial, label, tier, isActive, isDamaged }) {
+  const g = svg("g", { class: `vtt-token vtt-token--${tier}`, "aria-label": label, role: "img" });
+
+  // Ground shadow ellipse — creates physical elevation sense
+  g.appendChild(svg("ellipse", {
+    cx, cy: cy + Math.round(r * 0.3),
+    rx: Math.round(r * 1.15), ry: Math.round(r * 0.32),
+    fill: "rgba(0,0,0,0.58)"
+  }));
+
+  // Active pulse ring — signals player presence
+  if (isActive) {
+    g.appendChild(svg("circle", {
+      cx, cy, r: r + 9,
+      fill: "none", stroke: rim,
+      "stroke-width": "2", opacity: "0.55",
+      class: "token-ring"
+    }));
+  }
+
+  // Body disc — material identity
+  g.appendChild(svg("circle", {
+    cx, cy, r,
+    fill: body,
+    stroke: isDamaged ? "rgba(216,189,132,0.22)" : rim,
+    "stroke-width": tier === "hero" ? "5" : "3.5",
+    filter: "url(#shadow)"
+  }));
+
+  // Catch-light — top-left material highlight gives physical depth
+  g.appendChild(svg("circle", {
+    cx: cx - Math.round(r * 0.22), cy: cy - Math.round(r * 0.22),
+    r: Math.round(r * 0.52),
+    fill: hi, opacity: "0.14"
+  }));
+
+  // Damage crack — HP below 50%, visible wear on the piece
+  if (isDamaged) {
+    g.appendChild(svg("line", {
+      x1: cx - 3, y1: cy - Math.round(r * 0.6),
+      x2: cx + 2, y2: cy + Math.round(r * 0.5),
+      stroke: "rgba(255,120,90,0.75)",
+      "stroke-width": "1.5", "stroke-linecap": "round"
+    }));
+  }
+
+  // Initial — identity mark at centre of token
+  const t = svg("text", {
+    x: cx, y: cy + Math.round(r * 0.36),
+    "text-anchor": "middle",
+    "font-size": String(Math.round(r * (initial.length > 1 ? 0.62 : 0.78))),
+    fill: rim, "font-weight": "700", "font-family": "inherit",
+    "letter-spacing": initial.length > 1 ? "-0.5" : "0",
+    "pointer-events": "none"
+  });
+  t.textContent = initial;
+  g.appendChild(t);
+
+  return g;
+}
+
+function renderAllTokens(scene) {
+  const anchor = getLocation(scene.location);
+  const offsets = clusterOffsets(state.party.length);
+
+  // Party — each member gets a token, hero is largest and leads the cluster
+  state.party.forEach((member, i) => {
+    const [dx, dy] = offsets[i] || [0, 0];
+    const isHero = i === 0;
+    const palette = ROLE_PALETTE[member.role] || ROLE_PALETTE["Iron Captain"];
+    const isDamaged = member.hp < member.maxHp * 0.5;
+
+    const token = makeToken({
+      cx: anchor.x + dx,
+      cy: anchor.y - 56 + dy,
+      r: isHero ? 26 : 20,
+      body: palette.body, hi: palette.hi, rim: palette.rim,
+      initial: tokenInitial(member.name),
+      label: `${member.name} — ${member.role}`,
+      tier: isHero ? "hero" : "companion",
+      isActive: true,
+      isDamaged
+    });
+
+    // Tokens open character sheet — presence is interactive
+    token.setAttribute("tabindex", "0");
+    token.style.cursor = "pointer";
+    token.addEventListener("click", () => openCharacterSheet(member.id));
+    token.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") openCharacterSheet(member.id);
+    });
+
+    dom.tokenLayer.appendChild(token);
+  });
+
+  // Named threats — enemy pieces visible on the board
+  campaign.locations
+    .filter(loc => loc.kind === "threat")
+    .forEach(loc => {
+      const k = KIND_PALETTE.threat;
+      dom.tokenLayer.appendChild(makeToken({
+        cx: loc.x, cy: loc.y - 46,
+        r: k.r, body: k.body, hi: k.hi, rim: k.rim,
+        initial: tokenInitial(loc.name),
+        label: loc.name,
+        tier: "threat",
+        isActive: false, isDamaged: false
+      }));
+    });
 }
 
 function renderOutcome() {
