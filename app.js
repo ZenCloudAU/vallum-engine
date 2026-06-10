@@ -116,7 +116,9 @@ function createInitialState(module) {
       stateChange: "The account is empty."
     },
     completedChoices: [],
-    sessionComplete: false
+    sessionComplete: false,
+    activeLocations: null,
+    activeRoutes: null
   };
   console.log("Initialized game state:", initialState);
   return initialState;
@@ -226,6 +228,7 @@ function render() {
   try {
     if (state.sessionComplete) { renderSessionComplete(); return; }
     const scene = getScene();
+    if (scene.locations) { state.activeLocations = scene.locations; state.activeRoutes = scene.routes || null; }
     setText(dom.regionTitle, `${campaign.region} · ${campaign.series || "Vallum"}`);
     setText(dom.timeBox, `Day ${state.time.day} · ${state.time.phase}`);
     setText(dom.sceneTitle, scene.title);
@@ -251,7 +254,8 @@ function getScene() {
 }
 
 function getLocation(id) {
-  return campaign.locations.find((location) => location.id === id) || campaign.locations[0];
+  const locs = state?.activeLocations || campaign.locations;
+  return locs.find((location) => location.id === id) || locs[0];
 }
 
 function renderNarration(scene) {
@@ -341,13 +345,16 @@ function renderJournal() {
 
 function renderMap(scene) {
   if (!dom.routeLayer || !dom.locationLayer || !dom.tokenLayer) return;
+  const activeLocs   = state.activeLocations || campaign.locations;
+  const activeRoutes = state.activeRoutes   || campaign.routes;
   dom.routeLayer.innerHTML = "";
   dom.locationLayer.innerHTML = "";
   dom.tokenLayer.innerHTML = "";
   renderBattlefieldTexture();
-  (campaign.routes || []).forEach(([fromId, toId]) => {
-    const from = getLocation(fromId);
-    const to = getLocation(toId);
+  (activeRoutes || []).forEach(([fromId, toId]) => {
+    const from = activeLocs.find(l => l.id === fromId);
+    const to   = activeLocs.find(l => l.id === toId);
+    if (!from || !to) return;
     const active = (fromId === state.previousScene && toId === state.currentScene) || (toId === state.previousScene && fromId === state.currentScene);
     dom.routeLayer.appendChild(svg("line", {
       x1: from.x, y1: from.y, x2: to.x, y2: to.y,
@@ -358,8 +365,8 @@ function renderMap(scene) {
       "stroke-dasharray": "16 16"
     }));
   });
-  (campaign.locations || []).forEach((location) => renderLocation(location, scene.location));
-  renderAllTokens(scene);
+  (activeLocs || []).forEach((location) => renderLocation(location, scene.location));
+  renderAllTokens(scene, activeLocs);
 }
 
 function renderBattlefieldTexture() {
@@ -679,8 +686,9 @@ function makeToken({ cx, cy, r, body, hi, rim, initial, label, tier, isActive, i
   return g;
 }
 
-function renderAllTokens(scene) {
-  const anchor = getLocation(scene.location);
+function renderAllTokens(scene, activeLocs) {
+  const locs   = activeLocs || state.activeLocations || campaign.locations;
+  const anchor = locs.find(l => l.id === scene.location) || locs[0];
   const offsets = clusterOffsets(state.party.length);
 
   // Party — each member gets a token, hero is largest and leads the cluster
@@ -714,7 +722,7 @@ function renderAllTokens(scene) {
   });
 
   // Named threats — enemy pieces visible on the board
-  campaign.locations
+  locs
     .filter(loc => loc.kind === "threat")
     .forEach(loc => {
       const k = KIND_PALETTE.threat;

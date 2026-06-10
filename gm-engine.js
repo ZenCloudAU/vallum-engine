@@ -9,14 +9,21 @@ const GM = (() => {
 
 The player controls Kael Vorn, Iron Captain of the Eastern Marches. He is extremely capable. He is beginning to understand what capability costs.
 
-World: morally complex, politically uncomfortable, physically harsh. The Eastern Marches are wet, under-resourced, contested. Violence is concrete, not glorious. Every victory costs something. The account is never clean.
+World: the Eastern Marches — wet, feudal, contested. Violence is concrete, not glorious. Every victory costs something. The account is never clean. The Surge is real: a heightened operational state where the world narrows and action becomes effortless. The Hollow is what follows: a void that grows wider with each act that feeds the Surge without asking what it is for.
 
-NPC voices:
-- Raider Captain: professional, unhurried. Finds Kael interesting as a problem. Not surprised by anything.
-- Civilians: afraid, specific, not props. They have names they haven't said yet.
-- The Field Itself: the rain doesn't stop. The smoke doesn't clear.
+NPC voices — use these when narrating encounters:
+- Lord Caeden: measured, deliberate, never raises his voice. Uses words like shelter, sympathy, passage. Never threatens. Offers wine. The danger is that he sounds reasonable.
+- Sera: practical, self-possessed, entirely unafraid. Listens without performance. Says hard things clearly, without flinching. She loved the fire. That is the whole of the problem.
+- Mael: smooth administrative confidence. Shares culpability through language. "I knew what was necessary. You knew too. You didn't ask."
+- Edric the cartographer: small, dry, precise. Discharges obligations he didn't choose. Has run out of methods for living with it quietly.
+- Davan: fair-haired, nineteen, honest beyond his years. "Clean. Like a question answered." He is Kael's past, still walking around.
+- Calla: from Wrenford. Perhaps forty. Not expecting help — expecting to have tried. Describes situations plainly, without performance.
+- Raider Captain: professional, unhurried. Raises his axe in salute. Finds Kael interesting as a problem.
+- The Field Itself: the rain doesn't stop. The smoke doesn't clear. Weather is always present.
 
-Writing style: terse, literary, present-tense. Short declarative sentences. No purple prose. No words like epic, incredible, legendary, powerful, suddenly. Weather is always present. Kael is a man on a road, not a legend narrating himself.
+Core themes: the Surge as seduction, the Hollow as cost, witnessing as a form of moral action, the ledger the world does not balance.
+
+Writing style: terse, literary, present-tense. Short declarative sentences. No purple prose. No words like epic, incredible, legendary, powerful, suddenly. Kael is a man on a road, not a legend narrating himself.
 
 Stay under 140 words total. Narrate only what Kael perceives. Never explain game mechanics. Never use the word "you".`;
 
@@ -98,16 +105,20 @@ Stay under 140 words total. Narrate only what Kael perceives. Never explain game
     const rollLine = roll
       ? `Roll result: ${roll.success ? 'SUCCESS' : 'FAILURE'} — "${roll.text}"`
       : `Outcome: "${choice.result || 'The choice is recorded.'}"`;
-    return `Scene: ${scene.title}
+    const hollowNote = m.hollow >= 7 ? ' [Hollow is dominant — his interior is fraying]'
+                     : m.hollow >= 4 ? ' [Hollow is present and growing]' : '';
+    const surgeLine = m.force >= 7 ? ' [The Surge is close to the surface]' : '';
+    return `Scene: ${scene.title} (${scene.type || ''})
 Setting: ${scene.mood || ''}
 
-Kael's inner state — Force ${m.force}, Restraint ${m.restraint}, Witness ${m.witness}, Hollow ${m.hollow}, Reputation ${m.reputation}
-Field — Civilians: ${o.civilians ?? '?'}, Raider Threat: ${o.raiderThreat ?? '?'}, Captain Pressure: ${o.captainPressure ?? '?'}
+Kael's inner state — Force ${m.force}, Restraint ${m.restraint}, Witness ${m.witness}, Hollow ${m.hollow}${hollowNote}${surgeLine}, Reputation ${m.reputation}
+Account written: ${o.accountLines ?? 0} pages
+Field cost — Civilians: ${o.civilians ?? '?'}, Reshen cost: ${o.reshenCost ?? 0}
 
 Choice made: "${choice.label}"
 ${rollLine}
 
-Narrate the moment this choice resolves. 2–3 short paragraphs.`;
+Narrate the moment this choice resolves. 2–3 short paragraphs. Ground it in the specific detail of the scene. Let the consequences land.`;
   }
 
   function openScenePrompt(gameState, scene) {
