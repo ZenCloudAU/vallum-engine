@@ -3,7 +3,7 @@
 
 const GM = (() => {
   const KEY_STORE  = 'vallum.anthropic.key';
-  const MODEL      = 'claude-fable-5';
+  const MODEL      = 'claude-opus-4-8';   // upgrade to claude-fable-5 once available via API
 
   const SYSTEM = `You are the Game Master for Vallum, a solo TTRPG set in the Stormwright Cycle.
 
