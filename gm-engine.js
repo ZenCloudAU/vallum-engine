@@ -110,6 +110,16 @@ ${rollLine}
 Narrate the moment this choice resolves. 2–3 short paragraphs.`;
   }
 
+  function openScenePrompt(gameState, scene) {
+    const { moralState: m } = gameState;
+    return `Scene: ${scene.title} (${scene.type})
+Setting: ${scene.mood || ''}
+Stakes: ${scene.stakes || ''}
+Kael's inner state — Force ${m.force}, Restraint ${m.restraint}, Witness ${m.witness}, Hollow ${m.hollow}, Reputation ${m.reputation}
+
+Open this scene as GM. Set the stage. Let the player feel the world before they choose. 2–3 short paragraphs. Do not tell them what to do. Do not name their options. End on the weight of the decision being present.`;
+  }
+
   function askPrompt(query, gameState, scene) {
     const { moralState: m } = gameState;
     return `Scene: ${scene.title}
@@ -121,5 +131,5 @@ Player examines: "${query}"
 Respond as GM. 1–2 short paragraphs. Present-tense. This is what Kael perceives.`;
   }
 
-  return { key, setKey, clearKey, hasKey, stream, choicePrompt, askPrompt };
+  return { key, setKey, clearKey, hasKey, stream, openScenePrompt, choicePrompt, askPrompt };
 })();

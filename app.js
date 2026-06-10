@@ -183,10 +183,29 @@ function closeCover() {
   document.body.classList.remove("cover-open");
   render();
   renderAIStatus();
-  if (!GM.hasKey()) showApiModal();
+  if (!GM.hasKey()) {
+    showApiModal();
+  } else {
+    // GM opens the scene — fires on enter, not after a choice
+    gmOpenScene();
+  }
+}
+
+async function gmOpenScene() {
+  if (!GM.hasKey() || state.sessionComplete) return;
+  const scene = getScene();
+  showGMSpeaking();
+  await GM.stream({
+    userContent: GM.openScenePrompt(state, scene),
+    onToken: appendGMToken,
+    onDone: doneGMSpeaking,
+    onError(err) { showGMError(err); doneGMSpeaking(); }
+  });
 }
 
 function startNewSession() {
+  const hasSave = !!localStorage.getItem(STORAGE_KEY);
+  if (hasSave && !confirm("Begin a new session? Your current progress will be lost.")) return;
   localStorage.removeItem(STORAGE_KEY);
   state = createInitialState(campaign);
   if (dom.sessionComplete) dom.sessionComplete.hidden = true;
@@ -814,6 +833,7 @@ function buildForwardHook() {
 
 async function choose(choice) {
   try {
+    clearDiceResult();
     // Capture scene and snapshot BEFORE state changes — GM narrates from this context
     const sceneAtChoice = getScene();
     const before = snapshotState();
@@ -879,11 +899,38 @@ function collectChanges(changes, before, after) {
 }
 
 function resolveRoll(roll) {
-  const total = d20() + statBonus(roll.stat);
+  const raw   = d20();
+  const bonus = statBonus(roll.stat);
+  const total = raw + bonus;
   const success = total >= roll.target;
   const text = success ? roll.success : roll.failure;
   addJournal(text);
+  showDiceResult(roll, raw, bonus, total, success);
   return { success, text };
+}
+
+function showDiceResult(roll, raw, bonus, total, success) {
+  if (!dom.diceLog) return;
+  const sign = bonus >= 0 ? `+${bonus}` : `${bonus}`;
+  dom.diceLog.innerHTML = `
+    <div class="dice-result ${success ? "dice-success" : "dice-failure"}">
+      <span class="dice-label">d20</span>
+      <span class="dice-rolled">${raw}</span>
+      <span class="dice-op">+</span>
+      <span class="dice-stat-name">${roll.stat}</span>
+      <span class="dice-bonus">(${sign})</span>
+      <span class="dice-op">=</span>
+      <span class="dice-total">${total}</span>
+      <span class="dice-vs">vs ${roll.target}</span>
+      <span class="dice-verdict">${success ? "✓ Success" : "✗ Failure"}</span>
+    </div>`;
+  dom.diceLog.classList.remove("hidden-rolls");
+}
+
+function clearDiceResult() {
+  if (!dom.diceLog) return;
+  dom.diceLog.innerHTML = "";
+  dom.diceLog.classList.add("hidden-rolls");
 }
 
 function applyDelta(target, delta) {
@@ -904,8 +951,13 @@ function advanceTime(phase) {
   state.time.phase = phase;
 }
 
-function statBonus() {
-  return 0;
+function statBonus(stat) {
+  const v = (state?.moralState?.[stat]) || 0;
+  // 0–2 → −1 (untrained),  3–6 → +1,  7–9 → +2,  10 → +3
+  if (v <= 2) return -1;
+  if (v <= 6) return  1;
+  if (v <= 9) return  2;
+  return 3;
 }
 
 function openCharacterSheet(memberId) {
