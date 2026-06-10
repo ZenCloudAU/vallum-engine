@@ -78,18 +78,39 @@
         <div class="storm-map-frame map-frame">
           <svg id="worldMap" viewBox="0 0 1000 620" style="display:block; width:100%; height:min(52vh,640px);">
             <defs>
-              <radialGradient id="mapGrad" cx="50%" cy="50%" r="65%">
-                <stop offset="0%" stop-color="#2f3430"/>
-                <stop offset="100%" stop-color="#0b0d0e"/>
+              <radialGradient id="parchGrad" cx="46%" cy="38%" r="78%">
+                <stop offset="0%"   stop-color="#d8c082"/>
+                <stop offset="55%"  stop-color="#c4a45e"/>
+                <stop offset="100%" stop-color="#9a7030"/>
               </radialGradient>
+              <radialGradient id="vigGrad" cx="50%" cy="50%" r="68%">
+                <stop offset="48%" stop-color="transparent"/>
+                <stop offset="100%" stop-color="rgba(32,12,2,0.48)"/>
+              </radialGradient>
+              <pattern id="hatchPat" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="6" stroke="#8a6830" stroke-width="0.5" opacity="0.38"/>
+              </pattern>
               <filter id="shadow">
-                <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.6"/>
+                <feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="#2a1408" flood-opacity="0.55"/>
+              </filter>
+              <filter id="shadowSm">
+                <feDropShadow dx="1" dy="1" stdDeviation="1.5" flood-color="#2a1408" flood-opacity="0.45"/>
+              </filter>
+              <filter id="tokenShadow">
+                <feDropShadow dx="2" dy="3" stdDeviation="4" flood-color="#100800" flood-opacity="0.75"/>
               </filter>
             </defs>
-            <rect width="1000" height="620" fill="url(#mapGrad)"/>
+            <!-- Parchment base — always visible, never cleared by JS -->
+            <rect width="1000" height="620" fill="url(#parchGrad)"/>
+            <!-- Dynamic layers — cleared and redrawn each render -->
             <g id="routeLayer"></g>
             <g id="locationLayer"></g>
             <g id="tokenLayer"></g>
+            <!-- Vignette + border — sit above tokens, pointer-events:none -->
+            <rect width="1000" height="620" fill="url(#vigGrad)" pointer-events="none"/>
+            <rect x="0" y="0" width="1000" height="620" fill="none" stroke="#4a2e08" stroke-width="10" pointer-events="none"/>
+            <rect x="5" y="5" width="990" height="610" fill="none" stroke="#8a6028" stroke-width="2" pointer-events="none"/>
+            <rect x="9" y="9" width="982" height="602" fill="none" stroke="#6a4818" stroke-width="1" stroke-dasharray="8 5" pointer-events="none"/>
           </svg>
         </div>
         <div class="scenario-panel" style="margin-top:14px;">

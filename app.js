@@ -344,31 +344,242 @@ function renderMap(scene) {
 }
 
 function renderBattlefieldTexture() {
-  [
-    { x: 130, y: 88, width: 150, height: 88, rx: 22, fill: "rgba(216,189,132,0.08)" },
-    { x: 285, y: 405, width: 170, height: 110, rx: 22, fill: "rgba(129,159,182,0.10)" },
-    { x: 684, y: 185, width: 170, height: 110, rx: 22, fill: "rgba(179,91,79,0.13)" }
-  ].forEach((zone) => dom.routeLayer.appendChild(svg("rect", zone)));
+  const add = (el) => dom.routeLayer.appendChild(el);
 
+  // ── Region watermark ────────────────────────────────────────────
+  const regionLabel = svg("text", {
+    x: 500, y: 560,
+    "text-anchor": "middle",
+    "font-size": "32",
+    fill: "#3a2008",
+    "font-style": "italic",
+    opacity: "0.12",
+    "letter-spacing": "0.06em",
+    "pointer-events": "none"
+  });
+  regionLabel.textContent = "Eastern Marches";
+  add(regionLabel);
+
+  // ── Highland zone (upper-left — ridge territory) ─────────────────
+  // Hatch fill
+  add(svg("path", {
+    d: "M0,0 Q240,0 340,110 Q390,165 360,260 Q325,340 230,365 Q145,385 70,345 Q18,312 0,260Z",
+    fill: "url(#hatchPat)", opacity: "0.65"
+  }));
+  // Tint
+  add(svg("path", {
+    d: "M0,0 Q240,0 340,110 Q390,165 360,260 Q325,340 230,365 Q145,385 70,345 Q18,312 0,260Z",
+    fill: "#8a7040", opacity: "0.10"
+  }));
+
+  // ── Eastern road dirt path ───────────────────────────────────────
+  // Road shadow/base
+  add(svg("path", {
+    d: "M40,590 Q200,560 420,540 Q580,526 730,528 Q870,530 980,548",
+    fill: "none",
+    stroke: "#7a5828",
+    "stroke-width": "18",
+    "stroke-linecap": "round",
+    opacity: "0.32"
+  }));
+  // Road surface
+  add(svg("path", {
+    d: "M40,590 Q200,560 420,540 Q580,526 730,528 Q870,530 980,548",
+    fill: "none",
+    stroke: "#a07840",
+    "stroke-width": "8",
+    "stroke-dasharray": "28 14",
+    "stroke-linecap": "round",
+    opacity: "0.55"
+  }));
+
+  // ── Scrubland / open plain (center-left) ────────────────────────
+  add(svg("ellipse", {
+    cx: "350", cy: "480", rx: "190", ry: "100",
+    fill: "#6a8050", opacity: "0.10"
+  }));
+
+  // ── Trees / forest patches ──────────────────────────────────────
   [
-    { cx: 505, cy: 310, rx: 115, ry: 72, opacity: 0.22 },
-    { cx: 585, cy: 360, rx: 150, ry: 82, opacity: 0.18 },
-    { cx: 410, cy: 390, rx: 115, ry: 68, opacity: 0.14 }
-  ].forEach((smoke) => dom.routeLayer.appendChild(svg("ellipse", { ...smoke, fill: "#d7d0c6" })));
+    [860,340,16],[878,324,13],[896,345,14],[876,360,12],[855,356,11],
+    [908,328,12],[862,308,10]
+  ].forEach(([cx,cy,r]) => {
+    add(svg("circle", { cx, cy, r, fill: "#6a7a40", stroke: "#4a5828", "stroke-width": "0.8", opacity: "0.68" }));
+  });
+  [
+    [866,340,7],[880,326,6],[897,347,6]
+  ].forEach(([cx,cy,r]) => {
+    add(svg("circle", { cx, cy, r, fill: "#4a5a28", opacity: "0.65" }));
+  });
+
+  // ── Smoke plumes near burning caravan (520, 335) ────────────────
+  [
+    { cx: 510, cy: 318, rx: 80, ry: 46, o: 0.20 },
+    { cx: 540, cy: 298, rx: 100, ry: 52, o: 0.15 },
+    { cx: 490, cy: 355, rx: 90, ry: 44, o: 0.12 }
+  ].forEach(({ cx, cy, rx, ry, o }) => {
+    add(svg("ellipse", { cx, cy, rx, ry, fill: "#b0a898", opacity: o }));
+  });
+
+  // ── River (decorative, east side) ───────────────────────────────
+  add(svg("path", {
+    d: "M920,0 Q940,80 910,160 Q880,240 900,320 Q920,400 905,480 Q890,540 910,620",
+    fill: "none",
+    stroke: "#4a6070",
+    "stroke-width": "9",
+    opacity: "0.30"
+  }));
+  add(svg("path", {
+    d: "M920,0 Q940,80 910,160 Q880,240 900,320 Q920,400 905,480 Q890,540 910,620",
+    fill: "none",
+    stroke: "#6a92b2",
+    "stroke-width": "3.5",
+    opacity: "0.65"
+  }));
+
+  // ── Corner ornaments ─────────────────────────────────────────────
+  [
+    "M16,16 L46,16 M16,16 L16,46",
+    "M984,16 L954,16 M984,16 L984,46",
+    "M16,604 L46,604 M16,604 L16,574",
+    "M984,604 L954,604 M984,604 L984,574"
+  ].forEach((d) => {
+    add(svg("path", { d, fill: "none", stroke: "#6a4818", "stroke-width": "1.5", opacity: "0.65" }));
+  });
+
+  // ── Compass rose (bottom-left) ───────────────────────────────────
+  const compass = svgRaw(`
+    <g transform="translate(68,568)">
+      <polygon points="0,-28 4,-10 0,-8 -4,-10" fill="#5a3a10"/>
+      <polygon points="0,28 4,10 0,8 -4,10" fill="#5a3a10" opacity="0.5"/>
+      <polygon points="-28,0 -10,-4 -8,0 -10,4" fill="#5a3a10" opacity="0.55"/>
+      <polygon points="28,0 10,-4 8,0 10,4" fill="#5a3a10" opacity="0.55"/>
+      <circle cx="0" cy="0" r="7" fill="#8a6028" stroke="#4a3010" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="3" fill="#c8a050"/>
+      <text x="0" y="-33" text-anchor="middle" font-size="11" fill="#3a2008" font-weight="bold" font-family="Georgia,serif">N</text>
+    </g>`);
+  add(compass);
+
+  // ── Scale bar (bottom-right) ─────────────────────────────────────
+  const scale = svgRaw(`
+    <g transform="translate(840,578)" fill="#5a3810" stroke="#5a3810">
+      <line x1="-80" y1="0" x2="80" y2="0" stroke-width="1.5"/>
+      <line x1="-80" y1="-5" x2="-80" y2="5" stroke-width="1.5"/>
+      <line x1="0"   y1="-4" x2="0"   y2="4" stroke-width="1.2"/>
+      <line x1="80"  y1="-5" x2="80"  y2="5" stroke-width="1.5"/>
+      <rect x="-80" y="-3" width="80" height="6" fill="#5a3810" opacity="0.55"/>
+      <rect x="0"   y="-3" width="80" height="6" fill="#c8a850" opacity="0.4"/>
+      <text x="0" y="16" text-anchor="middle" font-size="8" letter-spacing="0.1em" font-family="Georgia,serif">one day's ride</text>
+    </g>`);
+  add(scale);
+}
+
+function svgRaw(str) {
+  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  g.innerHTML = str;
+  return g;
 }
 
 function renderLocation(location, currentId) {
-  const group = svg("g", { class: `location-node ${location.id === currentId ? "location-current" : ""}` });
-  const palette = { kael: "#d8bd84", fire: "#b35b4f", objective: "#819fb6", threat: "#7f3333", road: "#7d9b75" };
-  const fill = palette[location.kind] || "#d8bd84";
-  const marker = location.kind === "fire" || location.kind === "threat"
-    ? svg("rect", { x: location.x - 30, y: location.y - 30, width: 60, height: 60, rx: 10, fill, stroke: "rgba(0,0,0,0.45)", "stroke-width": 3 })
-    : svg("circle", { cx: location.x, cy: location.y, r: 30, fill, stroke: "rgba(0,0,0,0.45)", "stroke-width": 3 });
-  const label = svg("text", { x: location.x + 45, y: location.y + 8 });
+  const x = location.x;
+  const y = location.y;
+  const isActive = location.id === currentId;
+  const group = svg("g", {
+    class: `location-node ${isActive ? "location-current" : ""}`,
+    filter: "url(#shadowSm)"
+  });
+
+  // Active glow ring
+  if (isActive) {
+    group.appendChild(svg("circle", {
+      cx: x, cy: y, r: "42",
+      fill: "none",
+      stroke: "#c8a850",
+      "stroke-width": "1.5",
+      opacity: "0.35"
+    }));
+  }
+
+  // Kind-specific cartographic symbol, centered at (x, y)
+  // Icon sits from y-30 to y+8 approx — tokens are at y-76 so no overlap
+  group.appendChild(svgRaw(locationIcon(location.kind, x, y)));
+
+  // Label — always below anchor point
+  const label = svg("text", {
+    x, y: y + 28,
+    "text-anchor": "middle",
+    "font-size": "11",
+    "font-style": "italic",
+    "font-weight": isActive ? "bold" : "normal",
+    fill: isActive ? "#3a2008" : "#4a3010",
+    "letter-spacing": "0.02em",
+    "pointer-events": "none"
+  });
   label.textContent = location.name;
-  group.appendChild(marker);
   group.appendChild(label);
+
   dom.locationLayer.appendChild(group);
+}
+
+function locationIcon(kind, x, y) {
+  switch (kind) {
+    case "kael":
+    case "ridge":
+      // Cartographic elevation — three overlapping hill triangles
+      return `
+        <polygon points="${x-20},${y+10} ${x},${y-22} ${x+20},${y+10}" fill="#b09860" stroke="#5a3e18" stroke-width="1.5"/>
+        <polygon points="${x-32},${y+10} ${x-14},${y-14} ${x+4},${y+10}" fill="#a08850" stroke="#5a3e18" stroke-width="1.2" opacity="0.7"/>
+        <polygon points="${x-4},${y+10} ${x+14},${y-14} ${x+32},${y+10}" fill="#a08850" stroke="#5a3e18" stroke-width="1.2" opacity="0.7"/>
+        <polygon points="${x},${y-22} ${x+7},${y-8} ${x-7},${y-8}" fill="#ece4d4" opacity="0.85"/>`;
+
+    case "fire":
+      // Burning caravan — cart body, wheels, flames
+      return `
+        <rect x="${x-16}" y="${y-8}" width="32" height="18" rx="2" fill="#7a3818" stroke="#3a1808" stroke-width="1.5"/>
+        <circle cx="${x-8}" cy="${y+12}" r="6" fill="none" stroke="#4a2808" stroke-width="2"/>
+        <circle cx="${x+8}" cy="${y+12}" r="6" fill="none" stroke="#4a2808" stroke-width="2"/>
+        <line x1="${x-8}" y1="${y+6}" x2="${x-8}" y2="${y+18}" stroke="#4a2808" stroke-width="1"/>
+        <line x1="${x-14}" y1="${y+12}" x2="${x-2}" y2="${y+12}" stroke="#4a2808" stroke-width="1"/>
+        <line x1="${x+8}" y1="${y+6}" x2="${x+8}" y2="${y+18}" stroke="#4a2808" stroke-width="1"/>
+        <line x1="${x+2}" y1="${y+12}" x2="${x+14}" y2="${y+12}" stroke="#4a2808" stroke-width="1"/>
+        <path d="M${x-8},${y-8} Q${x-5},${y-24} ${x-2},${y-8}" fill="#c84818" opacity="0.92"/>
+        <path d="M${x-2},${y-8} Q${x+2},${y-20} ${x+5},${y-8}" fill="#e06828" opacity="0.85"/>
+        <path d="M${x+4},${y-8} Q${x+7},${y-18} ${x+10},${y-8}" fill="#c84818" opacity="0.8"/>
+        <path d="M${x-4},${y-8} Q${x},${y-16} ${x+3},${y-8}" fill="#f09040" opacity="0.6"/>`;
+
+    case "objective":
+      // Three figure silhouettes — civilians
+      return `
+        <circle cx="${x-10}" cy="${y-16}" r="4" fill="#7a6840" stroke="#4a3818" stroke-width="1"/>
+        <line x1="${x-10}" y1="${y-12}" x2="${x-10}" y2="${y}" stroke="#4a3818" stroke-width="2.5"/>
+        <line x1="${x-17}" y1="${y-8}" x2="${x-3}" y2="${y-8}" stroke="#4a3818" stroke-width="1.5"/>
+        <circle cx="${x}" cy="${y-16}" r="4" fill="#7a6840" stroke="#4a3818" stroke-width="1"/>
+        <line x1="${x}" y1="${y-12}" x2="${x}" y2="${y}" stroke="#4a3818" stroke-width="2.5"/>
+        <line x1="${x-7}" y1="${y-8}" x2="${x+7}" y2="${y-8}" stroke="#4a3818" stroke-width="1.5"/>
+        <circle cx="${x+10}" cy="${y-16}" r="4" fill="#7a6840" stroke="#4a3818" stroke-width="1"/>
+        <line x1="${x+10}" y1="${y-12}" x2="${x+10}" y2="${y}" stroke="#4a3818" stroke-width="2.5"/>
+        <line x1="${x+3}" y1="${y-8}" x2="${x+17}" y2="${y-8}" stroke="#4a3818" stroke-width="1.5"/>`;
+
+    case "threat":
+      // Enemy banner + crossed swords
+      return `
+        <line x1="${x-2}" y1="${y-28}" x2="${x-2}" y2="${y+6}" stroke="#5a2010" stroke-width="2.5"/>
+        <polygon points="${x-2},${y-28} ${x+18},${y-19} ${x-2},${y-10}" fill="#8a2010" stroke="#4a0808" stroke-width="1.5"/>
+        <line x1="${x-14}" y1="${y+6}" x2="${x+14}" y2="${y-8}" stroke="#5a3010" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="${x+14}" y1="${y+6}" x2="${x-14}" y2="${y-8}" stroke="#5a3010" stroke-width="2.2" stroke-linecap="round"/>`;
+
+    case "road":
+      // Milestone / marker stone
+      return `
+        <rect x="${x-8}" y="${y-22}" width="16" height="30" rx="2" fill="#7a6838" stroke="#4a3818" stroke-width="1.5"/>
+        <rect x="${x-10}" y="${y-26}" width="20" height="8" rx="1" fill="#6a5828" stroke="#4a3818" stroke-width="1.2"/>
+        <line x1="${x-5}" y1="${y-18}" x2="${x+5}" y2="${y-18}" stroke="#4a3010" stroke-width="1" opacity="0.5"/>
+        <line x1="${x-5}" y1="${y-12}" x2="${x+5}" y2="${y-12}" stroke="#4a3010" stroke-width="1" opacity="0.5"/>`;
+
+    default:
+      // Generic settlement dot
+      return `<circle cx="${x}" cy="${y}" r="10" fill="#9a8450" stroke="#5a3e18" stroke-width="1.5"/>`;
+  }
 }
 
 // ── Token helpers ─────────────────────────────────────────────────
@@ -414,7 +625,7 @@ function makeToken({ cx, cy, r, body, hi, rim, initial, label, tier, isActive, i
     fill: body,
     stroke: isDamaged ? "rgba(216,189,132,0.22)" : rim,
     "stroke-width": tier === "hero" ? "5" : "3.5",
-    filter: "url(#shadow)"
+    filter: "url(#tokenShadow)"
   }));
 
   // Catch-light — top-left material highlight gives physical depth
@@ -462,7 +673,7 @@ function renderAllTokens(scene) {
 
     const token = makeToken({
       cx: anchor.x + dx,
-      cy: anchor.y - 56 + dy,
+      cy: anchor.y - 76 + dy,
       r: isHero ? 26 : 20,
       body: palette.body, hi: palette.hi, rim: palette.rim,
       initial: tokenInitial(member.name),
@@ -489,7 +700,7 @@ function renderAllTokens(scene) {
     .forEach(loc => {
       const k = KIND_PALETTE.threat;
       dom.tokenLayer.appendChild(makeToken({
-        cx: loc.x, cy: loc.y - 46,
+        cx: loc.x, cy: loc.y - 66,
         r: k.r, body: k.body, hi: k.hi, rim: k.rim,
         initial: tokenInitial(loc.name),
         label: loc.name,
