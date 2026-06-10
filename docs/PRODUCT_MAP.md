@@ -64,92 +64,111 @@ Delivered:
 - first real module target selected: The Noise of Purpose
 - product roadmap aligned to Stormwright content
 
+## Delivered releases
+
+### v0.3.x — Stormwright module one: The Noise of Purpose (Act I) + engine hardening
+
+Delivered:
+
+- Stormwright source books ingested (Series Bible, Book I Complete, Book I Making of the Storm, Book II Weight of Still Water)
+- First five scenes adapted from Chapter I: ridge, civilians, command, surge, aftermath
+- Force, Restraint, Witness, Hollow, Reputation moral state engine
+- Civilians, raider threat, captain pressure as field objectives
+- Session complete screen with full account, moral portrait, and conditional forward hook
+- Dice check system (d20 + stat bonus, success/failure narrative)
+- Character sheet drawer
+- UX audit pass: decision cards, state hierarchy, dice log, outcome scroll
+- Static UAT matrix (UAT-001 through UAT-027) validated
+
+### v0.4 — Tabletop Entry and Orientation
+
+Delivered:
+
+- Campaign cover screen with Kael character card and rules reference
+- Continue Session / Begin on the Ridge entry points
+- Save state with version-keyed localStorage
+- AI GM engine (Claude Opus 4-8) with streaming SSE narration
+- Open-scene prompt, choice-consequence prompt, free-form Ask GM input
+- API key modal with offline fallback path
+
+### v0.5 — VTT Board Foundation
+
+Delivered:
+
+- Parchment cartographic SVG map with terrain texture, road, river, forest, smoke, compass, scale bar
+- Location nodes with cartographic icons by kind (ridge, fire, objective, threat, road)
+- Dimensional tabletop tokens: party cluster, threat pieces, kind palette
+- Token shadow, pulse ring, damage indicator
+- Board-first three-zone layout (GM panel | board + scenario | Kael/account)
+
+### v0.6 — Board Consequence + AI GM
+
+Delivered:
+
+- AI GM system prompt enriched with full NPC voice roster from Stormwright manuscripts (Caeden, Sera, Mael, Edric, Davan, Calla, Raider Captain)
+- Core themes and writing style constraints in system prompt
+- choicePrompt includes hollow severity, surge line, reshenCost, accountLines
+- Per-act map switching: scene.locations override updates state.activeLocations; all subsequent scenes in act inherit
+
+### v0.7 — Module One Completion: Full 8-hour adventure
+
+Delivered:
+
+- 24 scenes across 7 acts — complete Book I + early Book II Stormwright material
+- Act II: Caeden commission, Reshen operation, Edric tells the truth
+- Act III: Sera marches, hollow night, departure
+- Act IV: Mael spotted at market, the alley, stepping back
+- Act V: Davan encounter, road north, stone chamber found
+- Act VI: Calla's petition, Edric returns with folio, Fen named
+- Act VII: Caeden dead, village fire, bucket chain, chamber return, the account
+- Each act-opener scene carries its own locations array for map context
+- STORMWRIGHT_INGESTION.md canon reference committed to repo
+- reshenCost and accountLines added to objective state
+
+## Delivered release notes (v0.8 in progress)
+
+### v0.8 — Persistence and Resume (in progress as at 2026-06-10)
+
+Completed:
+
+- localStorage.setItem wrapped in try-catch in saveSilent() and saveState() — prevents "Table interrupted" crash on iOS private mode or full storage
+- gm-engine.js key/setKey/clearKey wrapped in try-catch — prevents uncaught throw when entering or clearing API key on restricted storage
+- escapeHtml() converted from String.replaceAll to .replace(/regex/g) — works on iOS Safari < 13.1 and Chrome < 85
+- toggleAmbience() wrapped in try-catch — AudioContext failure no longer becomes unhandled rejection
+- SVG filter removed from location nodes — halves GPU draw calls per render on mobile
+- -webkit-backdrop-filter added to API modal — iOS Safari < 16 compat
+
+Pending:
+
+- founder live test: save → close tab → reopen → Continue Session
+- founder live test on mobile (iOS Safari, Android Chrome)
+- normaliseState validation on cross-version save upgrade
+
 ## Release roadmap
 
-### v0.3 — Stormwright module one: The Noise of Purpose
+### v0.9 — MVP UAT Candidate
 
-Goal: replace the sample content with the first playable Stormwright module.
-
-Source focus:
-
-Book I, Chapter 1: the ridge above the burning caravan, the choice between saving civilians and cutting the head, the surge, the raider captain, and the aftermath.
+Goal: full internal acceptance test pass before public MVP release.
 
 Scope:
 
-- single-character or light-party module centred on Kael Vorn
-- battlefield tableau map rather than generic road map
-- civilians as objective state
-- raider captain as tactical pressure point
-- Force, Restraint, Witness, Hollow, and Reputation as early Stormwright mechanics
-- outcome states that track what was saved, what was lost, and what Kael refused or accepted seeing
-- module notes describing the source-canon relationship
+- founder live session on desktop and mobile
+- UAT matrix updated with 8-hour adventure test cases
+- accessibility and visual hierarchy review
+- mobile layout verified on iOS Safari and Android Chrome
+- all critical gates pass (UAT-001, -002, -004, -005, -009, -012, -013)
 
-Success condition: Phil can play a short Stormwright session and feel that Kael's world has entered Vallum without becoming generic fantasy.
+Success condition: Phil plays from the ridge to The Account and signs off.
 
-### v0.4 — Module authoring guide
+### v1.0 — MVP Release
 
-Goal: define how raw writing becomes a playable module.
+Goal: one complete Stormwright tabletop session, stable and publicly playable.
 
-Scope:
+Success condition: a first-time player can sit at the table, play through The Noise of Purpose, and finish with a complete account of what Kael did and what it cost.
 
-- module schema reference
-- scene type taxonomy
-- choice design rules
-- encounter design rules
-- character definition pattern
-- ambience tagging pattern
-- save-state considerations
-- Stormwright adaptation checklist
+### v1.1+ — MLP Sequence
 
-Success condition: a new Stormwright story slice can be converted into a playable module without changing the engine.
-
-### v0.5 — Stormwright rules and progression layer
-
-Goal: make character state reflect Stormwright's actual themes.
-
-Scope:
-
-- Force
-- Restraint
-- Witness
-- Hollow
-- Reputation
-- wounds
-- objective state
-- community consequence
-- rest and withdrawal rules
-
-Success condition: characters feel persistent across more than one session, and moral state matters as much as HP.
-
-### v0.6 — Lore bible and content compiler
-
-Goal: prepare for AI-assisted authoring without letting AI destabilise runtime play.
-
-Scope:
-
-- lore bible folder
-- source notes folder
-- module compiler prompt pattern
-- canon extraction template
-- generated module review checklist
-- Stormwright canon validation process
-
-Success condition: source writing can be digested into structured game material before runtime.
-
-### Future — Shared table mode
-
-Goal: allow multiple players to join the same campaign session later without rewriting the engine.
-
-Scope:
-
-- remote session state
-- join codes
-- character ownership
-- turn handling
-- shared dice log
-- party decision model
-
-Success condition: the engine can support solo play now and shared play later.
+See PRODUCT_ROADMAP_MVP_MLP.md for the full MLP arc (state-gated consequence, Module Two, companion foundation, world memory, authoring kit).
 
 ## Product principles
 

@@ -35,16 +35,20 @@ A player can enter the Stormwright world, sit down at the virtual table, underst
 
 ## MVP release sequence
 
-| Release | Name | Outcome |
-|---|---|---|
-| v0.3.x | Recovery and loop baseline | Stable engine, session-complete state and UAT controls |
-| v0.4 | Tabletop Entry and Orientation | World landing, sit-down transition, Kael orientation and clear first decision |
-| v0.5 | VTT Board Foundation | Board background contract, zones, coded fallback, Kael token and board-first layout |
-| v0.6 | Board Consequence | Choices alter board overlays, location pressure and account presentation |
-| v0.7 | Module One Completion | The Noise of Purpose becomes a complete multi-scene session with rising pressure and clean landing |
-| v0.8 | Persistence and Resume | Save, continue, reset and account continuity hardened |
-| v0.9 | MVP UAT Candidate | Full internal UAT, accessibility, visual hierarchy and defect correction |
-| v1.0 | MVP Release | One complete Stormwright tabletop session, stable and publicly playable |
+| Release | Name | Outcome | Status |
+|---|---|---|---|
+| v0.3.x | Recovery and loop baseline | Stable engine, session-complete state and UAT controls | ✅ Complete |
+| v0.4 | Tabletop Entry and Orientation | World landing, sit-down transition, Kael orientation and clear first decision | ✅ Complete |
+| v0.5 | VTT Board Foundation | Board background contract, zones, coded fallback, Kael token and board-first layout | ✅ Complete |
+| v0.6 | Board Consequence | Choices alter board overlays, location pressure and account presentation | ✅ Complete |
+| v0.7 | Module One Completion | The Noise of Purpose becomes a complete multi-scene session with rising pressure and clean landing | ✅ Complete |
+| v0.8 | Persistence and Resume | Save, continue, reset and account continuity hardened | 🔄 In Progress |
+| v0.9 | MVP UAT Candidate | Full internal UAT, accessibility, visual hierarchy and defect correction | ⬜ Upcoming |
+| v1.0 | MVP Release | One complete Stormwright tabletop session, stable and publicly playable | ⬜ Upcoming |
+
+### v0.8 current state
+
+Save and continue: in. LocalStorage hardened for iOS private mode, storage-full, and old browser compat (2025-06-10). Mobile crash vectors resolved. Pending: founder live test across session save → reload → resume on desktop and mobile.
 
 ## MLP definition
 
@@ -71,16 +75,16 @@ A player completes a short connected Stormwright arc, develops a distinct versio
 
 ## MLP release sequence
 
-| Release | Name | Outcome |
-|---|---|---|
-| v1.1 | State-Gated Consequence | Prior moral state opens, closes or reframes later choices |
-| v1.2 | Module Two — Reputation | Non-battlefield board where Kael's reputation is a problem rather than an advantage |
-| v1.3 | Companion Foundation | Party slots, token family, personality model and bounded companion interventions |
-| v1.4 | Module Three — Recognition | Consequences from Modules One and Two become unavoidable |
-| v1.5 | World Memory | Cross-module account, NPC acknowledgement and persistent obligations |
-| v1.6 | Authoring Kit | Story-to-module guide, board schema, validation and canon controls |
-| v1.7 | MLP UAT Candidate | Full arc testing, pacing, replay, companion presence and retention review |
-| v2.0 | MLP Release | Lovable three-module Stormwright tabletop arc |
+| Release | Name | Outcome | Status |
+|---|---|---|---|
+| v1.1 | State-Gated Consequence | Prior moral state opens, closes or reframes later choices | ⬜ Upcoming |
+| v1.2 | Module Two — Reputation | Non-battlefield board where Kael's reputation is a problem rather than an advantage | ⬜ Upcoming |
+| v1.3 | Companion Foundation | Party slots, token family, personality model and bounded companion interventions | ⬜ Upcoming |
+| v1.4 | Module Three — Recognition | Consequences from Modules One and Two become unavoidable | ⬜ Upcoming |
+| v1.5 | World Memory | Cross-module account, NPC acknowledgement and persistent obligations | ⬜ Upcoming |
+| v1.6 | Authoring Kit | Story-to-module guide, board schema, validation and canon controls | ⬜ Upcoming |
+| v1.7 | MLP UAT Candidate | Full arc testing, pacing, replay, companion presence and retention review | ⬜ Upcoming |
+| v2.0 | MLP Release | Lovable three-module Stormwright tabletop arc | ⬜ Upcoming |
 
 ## Later platform horizon
 

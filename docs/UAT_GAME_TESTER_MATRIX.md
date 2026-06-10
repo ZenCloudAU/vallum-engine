@@ -21,10 +21,12 @@ A release is not complete because code is committed. A release is complete only 
 
 | Release | UAT Target | Status |
 |---|---|---|
-| v0.3.4 Loop and Session Complete | Play to aftermath terminal choice. Session complete screen renders. Full account visible. Portrait present. Forward hook conditional. Restart returns to play table. | Pending founder live test |
-| v0.3.4 (UX) | Favicon visible. Decision cards distinct. State hierarchy readable. | Pending founder live test |
-| v0.3.3 Engine Reconnection | Full engine live. No crash on choice click. Static 23/23 pass. | Pending founder live confirmation |
-| v0.3.2 Interactive Recovery | Superseded. stable-play.js retired. | Closed |
+| v0.8 Mobile Stability | Load on iOS Safari and Android Chrome. Begin on the Ridge. Make 3 choices. No crash. localStorage errors silently handled. | Pending founder mobile test |
+| v0.8 Save / Resume | Play 5+ scenes. Save. Close tab. Reopen. Continue Session resumes correctly. State intact. | Pending founder live test |
+| v0.7 Full Adventure Loop | Play from ridge through The Account (24 scenes). Session complete screen renders with full journal. | Pending founder live playthrough |
+| v0.7 AI GM | Open scene narration fires. Choice narration streams. Ask GM responds. GM offline falls back cleanly. | Pending founder live test |
+| v0.3.4 (UX) | Favicon visible. Decision cards distinct. State hierarchy readable. | Closed — static pass |
+| v0.3.4 Loop and Session Complete | Superseded by v0.7 full adventure. | Closed |
 
 ## Internal UAT matrix
 
@@ -57,6 +59,12 @@ A release is not complete because code is committed. A release is complete only 
 | UAT-025 | Forward Hook Conditional | Complete two sessions with different moral paths. | Forward hook text differs based on final Hollow vs Reputation vs Civilian state. | Static PASS — three conditional branches in buildForwardHook() | Requires founder two-run comparison. |
 | UAT-026 | Session Restart | Click restart on session complete screen. | Returns to play table in new session. Cover screen does not appear. State is fresh. | Static PASS — completeRestartBtn calls startNewSession() which hides sessionComplete | Requires founder live test. |
 | UAT-027 | Aftermath No Self-Loop | After selecting any non-terminal aftermath choice, confirm loop. | Aftermath scene re-renders with choices visible. Terminal choice still available. | Static PASS — render() only redirects on sessionComplete flag, not on currentScene | Requires founder live test. |
+| UAT-028 | Act Transition | Complete aftermath. Confirm scene advances to caeden_summons. | New act opens. Scene title, narration, choices update. Map switches to Act II locations. | Static PASS — aftermath choice 4 nextScene: caeden_summons verified | Requires founder live test. |
+| UAT-029 | Per-Act Map | Advance to each act-opener scene (caeden_summons, sera_marches, ashen_crossing_market, crossroads_davan, calla_petition, caeden_dead). | Map updates to show act-specific locations. Token moves to scene.location in new act. | Static PASS — all 6 act-openers have locations arrays; renderMap reads state.activeLocations | Requires founder live test. |
+| UAT-030 | Full Adventure Length | Play all 24 scenes to The Account. | Session complete screen renders. All 7 acts traversed. Journal contains entries from multiple acts. | Pending founder full playthrough | Critical path for v0.9 signoff. |
+| UAT-031 | Mobile Load | Open site on iOS Safari and Android Chrome. Tap Begin on the Ridge. | Page loads. Cover screen visible. Tap works. No crash on first render. | Pending mobile test | localStorage and SVG filter fixes applied 2026-06-10. |
+| UAT-032 | AI GM Scene Open | Enter API key. Begin session. | GM opens the ridge scene with narration within 5 seconds. Streaming text appears. | Pending founder live test | Requires valid Anthropic API key. |
+| UAT-033 | AI GM Ask | Type a question in Ask box. Press Ask or Enter. | GM responds in character within 10 seconds. Response is under 200 words. | Pending founder live test | |
 
 ## Game tester matrix
 

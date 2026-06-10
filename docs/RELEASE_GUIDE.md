@@ -18,20 +18,28 @@ Before considering a release complete, confirm that the site loads, the campaign
 
 ## Version line
 
-v0.1 proves the first playable static vertical slice.
+v0.1 — first playable static vertical slice. ✅ Delivered.
 
-v0.2 formalises the product UX and documentation baseline.
+v0.2 — product UX and documentation baseline. ✅ Delivered.
 
-v0.3 introduces the first module based on Phil's own story material.
+v0.3.x — Stormwright module one (Act I), engine hardening, UAT matrix. ✅ Delivered.
 
-v0.4 defines the module authoring guide.
+v0.4 — tabletop entry, AI GM engine, API key flow. ✅ Delivered.
 
-v0.5 expands durable rules, character state, inventory, wounds, and progression.
+v0.5 — VTT board foundation: parchment map, Kael token, three-zone layout. ✅ Delivered.
 
-v0.6 prepares the lore bible and AI-assisted module compiler workflow.
+v0.6 — board consequence, per-act map switching, AI GM NPC voices. ✅ Delivered.
+
+v0.7 — Module One complete: 24 scenes, 7 acts, full 8-hour adventure. ✅ Delivered.
+
+v0.8 — persistence and resume hardening (localStorage, mobile, save/continue). 🔄 In progress.
+
+v0.9 — MVP UAT candidate: full founder live test, mobile sign-off. ⬜ Upcoming.
+
+v1.0 — MVP release: one complete Stormwright session, publicly playable. ⬜ Upcoming.
 
 ## Product roles
 
 Phil is founder, worldbuilder, creative director, and final decision-maker.
 
-ChatGPT operates as product manager, game designer, UX lead, technical architect, release manager, and implementation lead inside this project thread.
+Claude Code operates as product manager, game designer, UX lead, technical architect, release manager, and implementation lead.
