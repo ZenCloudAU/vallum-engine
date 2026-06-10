@@ -59,7 +59,18 @@ const dom = {
   completeJournal: $("completeJournal"),
   completePortrait: $("completePortrait"),
   completeHook: $("completeHook"),
-  completeRestartBtn: $("completeRestartBtn")
+  completeRestartBtn: $("completeRestartBtn"),
+  // AI GM
+  gmResponse: $("gmResponse"),
+  gmResponsePanel: $("gmResponsePanel"),
+  gmAskInput: $("gmAskInput"),
+  gmAskBtn: $("gmAskBtn"),
+  aiStatus: $("aiStatus"),
+  apiModal: $("apiModal"),
+  apiKeyInput: $("apiKeyInput"),
+  apiSaveBtn: $("apiSaveBtn"),
+  apiSkipBtn: $("apiSkipBtn"),
+  apiClearBtn: $("apiClearBtn")
 };
 
 let campaign = null;
@@ -156,12 +167,23 @@ function wireControls() {
   on(dom.characterDrawer, "click", (event) => {
     if (event.target === dom.characterDrawer) closeCharacterSheet();
   });
+  // AI GM controls
+  on(dom.gmAskBtn, "click", askGM);
+  on(dom.gmAskInput, "keydown", (e) => { if (e.key === "Enter") askGM(); });
+  on(dom.aiStatus, "click", showApiModal);
+  on(dom.apiSaveBtn, "click", saveApiKey);
+  on(dom.apiSkipBtn, "click", hideApiModal);
+  on(dom.apiClearBtn, "click", () => { GM.clearKey(); renderAIStatus(); hideApiModal(); });
+  on(dom.apiModal, "click", (e) => { if (e.target === dom.apiModal) hideApiModal(); });
+  on(dom.apiKeyInput, "keydown", (e) => { if (e.key === "Enter") saveApiKey(); });
 }
 
 function closeCover() {
   if (dom.campaignCover) dom.campaignCover.hidden = true;
   document.body.classList.remove("cover-open");
   render();
+  renderAIStatus();
+  if (!GM.hasKey()) showApiModal();
 }
 
 function startNewSession() {
@@ -579,10 +601,14 @@ function buildForwardHook() {
   return "The garrison wants a report. The Council of the Eastern Marches will want more than that. What happened on the road has already left the road — it lives now in accounts carried by men who were not there, and the shape of those accounts is not entirely accurate. Kael has not yet decided whether to correct them.";
 }
 
-function choose(choice) {
+async function choose(choice) {
   try {
+    // Capture scene and snapshot BEFORE state changes — GM narrates from this context
+    const sceneAtChoice = getScene();
     const before = snapshotState();
     const startingScene = state.currentScene;
+
+    // Resolve roll and apply all state changes
     const roll = choice.roll ? resolveRoll(choice.roll) : null;
     if (choice.objectives) applyDelta(state.objectives, choice.objectives);
     if (choice.moral) applyDelta(state.moralState, choice.moral);
@@ -592,6 +618,7 @@ function choose(choice) {
     if (choice.time) advanceTime(choice.time);
     if (choice.nextScene) state.currentScene = choice.nextScene;
     if (choice.result && choice.result.toLowerCase().includes("module ends")) state.sessionComplete = true;
+
     state.previousScene = startingScene;
     state.latestOutcome = {
       consequence: roll ? roll.text : choice.result || "The choice is recorded.",
@@ -600,9 +627,22 @@ function choose(choice) {
     state.completedChoices.push({ scene: startingScene, label: choice.label, nextScene: state.currentScene, at: new Date().toISOString() });
     saveSilent();
     setStatus("Autosaved.");
+    clearGMResponse();
     render();
+
     if (!state.sessionComplete && dom.outcomeText) {
       dom.outcomeText.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    // AI GM narration — streams into centre table after mechanical render
+    if (GM.hasKey() && !state.sessionComplete) {
+      showGMSpeaking();
+      await GM.stream({
+        userContent: GM.choicePrompt(choice, roll, state, sceneAtChoice),
+        onToken: appendGMToken,
+        onDone: doneGMSpeaking,
+        onError(err) { showGMError(err); doneGMSpeaking(); }
+      });
     }
   } catch (error) {
     showFatalError(error);
@@ -682,6 +722,79 @@ function openCharacterSheet(memberId) {
 
 function closeCharacterSheet() {
   if (dom.characterDrawer) dom.characterDrawer.hidden = true;
+}
+
+// ── AI GM ─────────────────────────────────────────────────────────
+
+function showApiModal() {
+  if (dom.apiKeyInput && GM.hasKey()) dom.apiKeyInput.value = '';
+  if (dom.apiModal) dom.apiModal.hidden = false;
+}
+
+function hideApiModal() {
+  if (dom.apiModal) dom.apiModal.hidden = true;
+}
+
+function saveApiKey() {
+  const k = dom.apiKeyInput?.value?.trim();
+  if (k) { GM.setKey(k); renderAIStatus(); }
+  hideApiModal();
+}
+
+function renderAIStatus() {
+  if (!dom.aiStatus) return;
+  setText(dom.aiStatus, GM.hasKey() ? "AI ✦ On" : "AI · Off");
+  dom.aiStatus.classList.toggle("ai-status-on", GM.hasKey());
+}
+
+function clearGMResponse() {
+  if (dom.gmResponsePanel) dom.gmResponsePanel.hidden = true;
+  if (dom.gmResponse) dom.gmResponse.innerHTML = "";
+}
+
+function showGMSpeaking() {
+  if (!dom.gmResponse || !dom.gmResponsePanel) return;
+  dom.gmResponse.innerHTML = '<span class="gm-cursor" aria-hidden="true">▌</span>';
+  dom.gmResponsePanel.hidden = false;
+  dom.gmResponsePanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function appendGMToken(token) {
+  if (!dom.gmResponse) return;
+  const cursor = dom.gmResponse.querySelector('.gm-cursor');
+  if (cursor) {
+    cursor.insertAdjacentText('beforebegin', token);
+  } else {
+    dom.gmResponse.insertAdjacentText('beforeend', token);
+  }
+}
+
+function doneGMSpeaking() {
+  const cursor = dom.gmResponse?.querySelector('.gm-cursor');
+  if (cursor) cursor.remove();
+}
+
+function showGMError(msg) {
+  if (!dom.gmResponse) return;
+  dom.gmResponse.innerHTML = `<span class="gm-error">GM offline — ${escapeHtml(msg)}</span>`;
+}
+
+async function askGM() {
+  const query = dom.gmAskInput?.value?.trim();
+  if (!query) return;
+
+  if (!GM.hasKey()) { showApiModal(); return; }
+
+  dom.gmAskInput.value = '';
+  showGMSpeaking();
+
+  const scene = getScene();
+  await GM.stream({
+    userContent: GM.askPrompt(query, state, scene),
+    onToken: appendGMToken,
+    onDone: doneGMSpeaking,
+    onError(err) { showGMError(err); doneGMSpeaking(); }
+  });
 }
 
 function addJournal(entry) {

@@ -53,7 +53,10 @@
     <section class="play-layout">
 
       <aside class="gm-panel">
-        <p class="eyebrow">Game Master</p>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:8px;">
+          <p class="eyebrow">Game Master</p>
+          <button id="aiStatus" class="ai-status-btn" title="AI GM settings"></button>
+        </div>
         <h2 id="sceneTitle" style="margin:6px 0 0;"></h2>
         <div class="gm-brief" style="margin-top:14px;">
           <p class="eyebrow" id="sceneType"></p>
@@ -64,6 +67,10 @@
           <div id="choiceList"></div>
         </div>
         <div id="diceLog" class="hidden-rolls"></div>
+        <div class="gm-ask-row" id="gmAskRow" style="margin-top:14px;">
+          <input id="gmAskInput" type="text" placeholder="Examine the field, talk to an NPC…" class="gm-ask-input" autocomplete="off" />
+          <button id="gmAskBtn" class="compact-control gm-ask-btn">Ask</button>
+        </div>
       </aside>
 
       <section class="centre-table">
@@ -88,6 +95,10 @@
         <div class="scenario-panel" style="margin-top:14px;">
           <p class="eyebrow">Scenario</p>
           <div class="narration" id="narration"></div>
+        </div>
+        <div class="gm-response-panel" id="gmResponsePanel" hidden>
+          <p class="eyebrow gm-voice-label">The GM Speaks</p>
+          <div id="gmResponse" class="gm-stream"></div>
         </div>
         <div class="outcome-panel" style="margin-top:12px;">
           <p class="outcome-label">What Changed</p>
@@ -140,6 +151,23 @@
     </div>
   </div>
 
+  <!-- API key modal — shown once on first entry if no key is set -->
+  <div id="apiModal" class="api-modal" hidden role="dialog" aria-modal="true" aria-labelledby="apiModalTitle">
+    <div class="api-card">
+      <p class="eyebrow">Game Master Setup</p>
+      <h2 id="apiModalTitle">Enable AI Game Master</h2>
+      <p class="api-desc">Add an Anthropic API key to unlock live GM narration and NPC dialogue powered by Claude Fable 5. Your key is stored in this browser only and sent directly to Anthropic — never to any other server.</p>
+      <input id="apiKeyInput" type="password" placeholder="sk-ant-api03-…" class="api-key-input" autocomplete="off" spellcheck="false" />
+      <p class="api-note">Get a key at <strong>console.anthropic.com</strong></p>
+      <div class="api-actions">
+        <button id="apiSaveBtn" class="primary">Enable AI GM</button>
+        <button id="apiSkipBtn" class="compact-control">Play offline</button>
+        <button id="apiClearBtn" class="compact-control api-clear-btn">Clear key</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="gm-engine.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
