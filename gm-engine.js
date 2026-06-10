@@ -27,9 +27,9 @@ Writing style: terse, literary, present-tense. Short declarative sentences. No p
 
 Stay under 140 words total. Narrate only what Kael perceives. Never explain game mechanics. Never use the word "you".`;
 
-  function key()        { return localStorage.getItem(KEY_STORE); }
-  function setKey(k)    { localStorage.setItem(KEY_STORE, k.trim()); }
-  function clearKey()   { localStorage.removeItem(KEY_STORE); }
+  function key()        { try { return localStorage.getItem(KEY_STORE); } catch { return null; } }
+  function setKey(k)    { try { localStorage.setItem(KEY_STORE, k.trim()); } catch {} }
+  function clearKey()   { try { localStorage.removeItem(KEY_STORE); } catch {} }
   function hasKey()     { return !!key(); }
 
   async function stream({ userContent, onToken, onDone, onError }) {

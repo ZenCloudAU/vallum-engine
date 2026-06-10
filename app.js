@@ -216,12 +216,12 @@ function startNewSession() {
 }
 
 function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
   setStatus("Saved.");
 }
 
 function saveSilent() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
 }
 
 function render() {
@@ -511,8 +511,7 @@ function renderLocation(location, currentId) {
   const y = location.y;
   const isActive = location.id === currentId;
   const group = svg("g", {
-    class: `location-node ${isActive ? "location-current" : ""}`,
-    filter: "url(#shadowSm)"
+    class: `location-node ${isActive ? "location-current" : ""}`
   });
 
   // Active glow ring
@@ -1073,17 +1072,19 @@ function addJournal(entry) {
 }
 
 async function toggleAmbience() {
-  if (!audio.enabled) {
-    await startAudio();
-    audio.enabled = true;
-    setText(dom.ambienceBtn, "M");
-    playAmbience(getScene().ambience);
-  } else {
-    stopAmbience();
-    audio.enabled = false;
-    setText(dom.ambienceBtn, "M");
-  }
-  renderAudioState(getScene());
+  try {
+    if (!audio.enabled) {
+      await startAudio();
+      audio.enabled = true;
+      setText(dom.ambienceBtn, "M");
+      playAmbience(getScene().ambience);
+    } else {
+      stopAmbience();
+      audio.enabled = false;
+      setText(dom.ambienceBtn, "M");
+    }
+    renderAudioState(getScene());
+  } catch {}
 }
 
 function renderAudioState() {
@@ -1181,11 +1182,11 @@ function setText(target, value) {
 
 function escapeHtml(value) {
   return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 function showFatalError(error) {
